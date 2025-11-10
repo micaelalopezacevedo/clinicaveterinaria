@@ -1,1 +1,1 @@
-HOLAHOLAHOLA
+10/11: Creación y conexión a base de datos con Sqlite3.
