@@ -105,8 +105,8 @@ PRACTICA_FINAL/
 
 ## DESARROLLO DEL PROYECTO
 ### PRIMERA ENTREGA: ESQUELETO DE LA PRÁCTICA
-Para realizar la tarea con entrega el día 11 de nomviembre, el equipo se reunió en tres ocasiones:
-- Primenta reunión - Crear la estructura de archivos (6/11/25): El equipo se reune, lee detenidamente el objetivode la práctica, y se pone de acuerdo para realizar el resqueleto conjunto y subitlo a github.
-- Segunda  reunión - Investigar el front-end (7/11/25): Se inverstigó a fondo sobre Streamlit y su uso y se contemplaron distintas formas de utilizarlo en el proyecto.
+Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió en cuatro ocasiones:
+- Primera reunión - Crear la estructura de archivos (6/11/25): El equipo se reune, lee detenidamente el objetivo de la práctica, y se pone de acuerdo para realizar el esqueleto y subirlo a github.
+- Segunda  reunión - Investigar el front-end (7/11/25): Se investigó a fondo sobre Streamlit, su uso y se contemplaron distintas formas de utilizarlo en el proyecto.
 - Tercera reunión - Investigar el back-end (10/11/25): investigamos el uso de SQLite para entender cómo implementarlo en el proyecto. Además, creamos un entorno virtual para trabajar de forma ordenada y asegurar el correcto funcionamiento del proyecto.
-- Cuarta reunión: Definimos las clases y funciones principales según los requisitos del proyecto.
+- Cuarta reunión (11/11/25): Definimos las clases y funciones principales según los requisitos del proyecto.
