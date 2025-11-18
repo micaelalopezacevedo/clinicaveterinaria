@@ -47,12 +47,12 @@ def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None
     
     except IntegrityError:
         session.rollback()
-        print(f"❌ Error: DNI {dni} ya existe")
+        print(f"Error: DNI {dni} ya existe")
         return None
     
     except Exception as e:
         session.rollback()
-        print(f"❌ Error al crear cliente: {str(e)}")
+        print(f"Error al crear cliente: {str(e)}")
         return None
 
 
@@ -114,7 +114,7 @@ def buscar_cliente_por_nombre(nombre: str) -> list:
         ).all()
         return clientes
     except Exception as e:
-        print(f"❌ Error al buscar por nombre: {str(e)}")
+        print(f"Error al buscar por nombre: {str(e)}")
         return []
 
 
@@ -133,7 +133,7 @@ def modificar_cliente(cliente_id: int, nombre: str = None, telefono: str = None,
         cliente = obtener_cliente_por_id(cliente_id)
         
         if not cliente:
-            print(f"❌ No existe cliente con ID: {cliente_id}")
+            print(f"No existe cliente con ID: {cliente_id}")
             return None
         
         # Actualizar solo campos proporcionados
@@ -147,12 +147,12 @@ def modificar_cliente(cliente_id: int, nombre: str = None, telefono: str = None,
         # Confirmar cambios
         session.commit()
         
-        print(f"✅ Cliente actualizado: {cliente.nombre}")
+        print(f"Cliente actualizado: {cliente.nombre}")
         return cliente
     
     except Exception as e:
         session.rollback()
-        print(f"❌ Error al modificar cliente: {str(e)}")
+        print(f"Error al modificar cliente: {str(e)}")
         return None
 
 
@@ -171,7 +171,7 @@ def eliminar_cliente(cliente_id: int) -> bool:
         cliente = obtener_cliente_por_id(cliente_id)
         
         if not cliente:
-            print(f"❌ No existe cliente con ID: {cliente_id}")
+            print(f"No existe cliente con ID: {cliente_id}")
             return False
         
         nombre = cliente.nombre
@@ -180,12 +180,12 @@ def eliminar_cliente(cliente_id: int) -> bool:
         session.delete(cliente)
         session.commit()
         
-        print(f"✅ Cliente eliminado: {nombre}")
+        print(f"Cliente eliminado: {nombre}")
         return True
     
     except Exception as e:
         session.rollback()
-        print(f"❌ Error al eliminar cliente: {str(e)}")
+        print(f"Error al eliminar cliente: {str(e)}")
         return False
 
 
@@ -202,7 +202,7 @@ def contar_clientes() -> int:
     try:
         return session.query(Cliente).count()
     except Exception as e:
-        print(f"❌ Error al contar clientes: {str(e)}")
+        print(f"Error al contar clientes: {str(e)}")
         return 0
 
 

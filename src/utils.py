@@ -6,6 +6,8 @@ Todos los métodos son estáticos.
 Incluye validaciones, formateo y funciones auxiliares.
 """
 
+import re
+
 class Utilidades:
     """
     Clase estática con funciones de utilidad para la aplicación
@@ -14,6 +16,15 @@ class Utilidades:
     
     # VALIDACIONES
     @staticmethod
+    def validar_nombre(nombre: str) -> bool:
+
+        #FOROMATEO
+        nombre = nombre.lower().strip()
+
+        patron = r"[A-Za-z]+$"
+        return re.match(patron, nombre)
+
+    @staticmethod
     def validar_dni(dni: str) -> bool:
         """
         Valida formato de DNI español (8 números + 1 letra)
@@ -21,6 +32,13 @@ class Utilidades:
         Return: True si válido, False si no (bool)
         Formato esperado: 12345678A
         """
+
+        #FORMATEO
+        dni = dni.upper().strip()
+
+        # CONSTRUIR UN PATRÓN CON RE
+        patron = r"^\d{8}[A-Z]$"
+        return(re.match(patron, dni))
     
     @staticmethod
     def validar_email(email: str) -> bool:
@@ -30,6 +48,13 @@ class Utilidades:
         Return: True si válido, False si no (bool)
         Verifica: presencia de @ y dominio
         """
+
+        # FORMATEO
+        email = email.lower().strip()
+
+        patron = r"^[\w\.-]+@[\w\.-]+\.[A-Za-z]{2,}$"
+
+        return re.match(patron, email)
     
     @staticmethod
     def validar_telefono(telefono: str) -> bool:
@@ -39,6 +64,15 @@ class Utilidades:
         Return: True si válido, False si no (bool)
         Formato esperado: 600123456 o 600-123-456
         """
+        #FORMATEO
+        # CONTEMPLAR SI HAY ESPACIOS
+        telefono = telefono.split() # Separar en lista por espacios
+        separator = ""
+        telefono = separator.join(telefono) # Juntar en un mismo string para seguir formato estandarizado
+        telefono = telefono.strip()
+
+        patron = r"^\d{9}$"
+        return re.match(patron, telefono)
     
     @staticmethod
     def validar_fecha(fecha_str: str) -> tuple:
@@ -74,7 +108,7 @@ class Utilidades:
         Return: True si válido, False si no (bool)
         """
     
-    # FORMATEO
+    # FORMATEO (SUPUESTO: AL FORMATEAR UN DATO; SE ASUME QUE YA HA PASADO POR VALIDACIONES)
     @staticmethod
     def formatear_dni(dni: str) -> str:
         """
@@ -83,6 +117,8 @@ class Utilidades:
         Return: DNI formateado (str)
         Ejemplo: "12345678 a" -> "12345678A"
         """
+        dni = dni.upper().strip()
+        return(dni)
     
     @staticmethod
     def formatear_telefono(telefono: str) -> str:
@@ -92,6 +128,14 @@ class Utilidades:
         Return: Teléfono formateado (str)
         Ejemplo: "600-123-456" -> "600123456"
         """
+
+        # CONTEMPLAR SI HAY ESPACIOS
+        telefono = telefono.split() # Separar en lista por espacios
+        separator = ""
+        telefono = separator.join(telefono) # Juntar en un mismo string para seguir formato estandarizado
+        telefono = telefono.strip()
+
+        return telefono
     
     @staticmethod
     def formatear_nombre(nombre: str) -> str:
@@ -101,6 +145,9 @@ class Utilidades:
         Return: Nombre formateado (str)
         Ejemplo: "juan pérez" -> "Juan Pérez"
         """
+        nombre = nombre.strip().lower()
+
+        return nombre.title()
     
     @staticmethod
     def formatear_email(email: str) -> str:
@@ -110,6 +157,9 @@ class Utilidades:
         Return: Email formateado (str)
         Ejemplo: "JUAN@EMAIL.COM " -> "juan@email.com"
         """
+
+        email = email.lower().strip()
+        return email
     
     # BÚSQUEDAS Y FILTROS
     @staticmethod
