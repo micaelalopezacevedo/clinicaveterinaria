@@ -7,43 +7,256 @@ Cubre requisitos RF1-RF4.
 """
 
 import streamlit as st
-from src.clientes import *
+from src.clientes import (
+    crear_cliente,
+    listar_clientes,
+    obtener_cliente_por_id,
+    buscar_cliente_por_dni,
+    buscar_cliente_por_nombre,
+    modificar_cliente,
+    eliminar_cliente
+)
 from src.mascotas import obtener_mascotas_por_cliente
 
-def tab_registrar_cliente():
-    """
-    Tab: Formulario para registrar nuevo cliente
-    - Input: nombre, dni, telefono, email
-    - Botón: Registrar
-    - Output: Mensaje de éxito o error
-    """
+# Configuración de la página
+st.set_page_config(
+    page_title="Gestión de Clientes",
+    page_icon="👤",
+    layout="wide"
+)
 
-def tab_lista_clientes():
-    """
-    Tab: Mostrar lista de todos los clientes
-    - Muestra tabla/lista con: ID, nombre, DNI, teléfono
-    - Para cada cliente: botón para ver detalles, editar, eliminar
-    - Mostrar mascotas asociadas
-    """
+# Título principal
+st.title("👤 Gestión de Clientes")
+st.markdown("---")
 
-def tab_buscar_cliente():
-    """
-    Tab: Buscar cliente por nombre o DNI
-    - Input: nombre o DNI
-    - Botón: Buscar
-    - Output: Resultados encontrados
-    """
+# Crear tabs para organizar funcionalidades
+tab1, tab2, tab3, tab4 = st.tabs(["📝 Registrar", "📋 Listar", "🔍 Buscar", "✏️ Editar/Eliminar"])
 
-def tab_editar_cliente():
-    """
-    Tab: Editar datos de cliente existente
-    - Input: ID del cliente
-    - Mostrar datos actuales
-    - Permitir modificar: nombre, teléfono, email
-    - Botón: Guardar cambios
-    """
+# ========================================
+# TAB 1: REGISTRAR CLIENTE
+# ========================================
+with tab1:
+    st.header("Registrar nuevo cliente")
+    
+    with st.form("form_registrar_cliente"):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            nombre = st.text_input("Nombre completo *", placeholder="Ej: Juan Pérez García")
+            dni = st.text_input("DNI *", placeholder="Ej: 12345678A")
+        
+        with col2:
+            telefono = st.text_input("Teléfono", placeholder="Ej: 600123456")
+            email = st.text_input("Email", placeholder="Ej: juan@email.com")
+        
+        st.markdown("**Los campos marcados con * son obligatorios**")
+        
+        submitted = st.form_submit_button("✅ Registrar cliente", use_container_width=True)
+        
+        if submitted:
+            if not nombre or not dni:
+                st.error("⚠️ El nombre y el DNI son obligatorios")
+            else:
+                try:
+                    cliente = crear_cliente(nombre, dni, telefono, email)
+                    if cliente:
+                        st.success(f"✅ Cliente **{nombre}** registrado correctamente con ID: {cliente.id}")
+                    else:
+                        st.error("❌ Error al crear el cliente. El DNI podría estar duplicado.")
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
 
-def main():
-    """
-    Función principal que organiza los tabs y ejecuta la interfaz
-    """
+# ========================================
+# TAB 2: LISTAR CLIENTES
+# ========================================
+with tab2:
+    st.header("Lista de todos los clientes")
+    
+    try:
+        clientes = listar_clientes()
+        
+        if not clientes:
+            st.info("ℹ️ No hay clientes registrados todavía")
+        else:
+            st.metric("Total de clientes", len(clientes))
+            st.markdown("---")
+            
+            for cliente in clientes:
+                with st.expander(f"👤 {cliente.nombre} - DNI: {cliente.dni}"):
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.write(f"**ID:** {cliente.id}")
+                        st.write(f"**Nombre:** {cliente.nombre}")
+                        st.write(f"**DNI:** {cliente.dni}")
+                    
+                    with col2:
+                        st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
+                        st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                    
+                    # Mostrar mascotas del cliente
+                    mascotas = obtener_mascotas_por_cliente(cliente.id)
+                    if mascotas:
+                        st.markdown("**🐾 Mascotas:**")
+                        for mascota in mascotas:
+                            st.write(f"- {mascota.nombre} ({mascota.especie})")
+                    else:
+                        st.info("Sin mascotas registradas")
+    
+    except Exception as e:
+        st.error(f"❌ Error al listar clientes: {str(e)}")
+
+# ========================================
+# TAB 3: BUSCAR CLIENTE
+# ========================================
+with tab3:
+    st.header("Buscar clientes")
+    
+    tipo_busqueda = st.radio(
+        "Buscar por:",
+        ["DNI", "Nombre"],
+        horizontal=True
+    )
+    
+    if tipo_busqueda == "DNI":
+        dni_buscar = st.text_input("Introduce el DNI", placeholder="Ej: 12345678A")
+        
+        if st.button("🔍 Buscar por DNI", use_container_width=True):
+            if not dni_buscar:
+                st.warning("⚠️ Introduce un DNI para buscar")
+            else:
+                try:
+                    cliente = buscar_cliente_por_dni(dni_buscar)
+                    
+                    if cliente:
+                        st.success(f"✅ Cliente encontrado")
+                        
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.write(f"**ID:** {cliente.id}")
+                            st.write(f"**Nombre:** {cliente.nombre}")
+                            st.write(f"**DNI:** {cliente.dni}")
+                        
+                        with col2:
+                            st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
+                            st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                    else:
+                        st.error(f"❌ No se encontró ningún cliente con DNI: {dni_buscar}")
+                
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+    
+    else:  # Buscar por nombre
+        nombre_buscar = st.text_input("Introduce el nombre (o parte del nombre)", placeholder="Ej: Juan")
+        
+        if st.button("🔍 Buscar por nombre", use_container_width=True):
+            if not nombre_buscar:
+                st.warning("⚠️ Introduce un nombre para buscar")
+            else:
+                try:
+                    clientes = buscar_cliente_por_nombre(nombre_buscar)
+                    
+                    if clientes:
+                        st.success(f"✅ Se encontraron {len(clientes)} cliente(s)")
+                        
+                        for cliente in clientes:
+                            with st.expander(f"👤 {cliente.nombre} - DNI: {cliente.dni}"):
+                                col1, col2 = st.columns(2)
+                                
+                                with col1:
+                                    st.write(f"**ID:** {cliente.id}")
+                                    st.write(f"**Nombre:** {cliente.nombre}")
+                                    st.write(f"**DNI:** {cliente.dni}")
+                                
+                                with col2:
+                                    st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
+                                    st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                    else:
+                        st.error(f"❌ No se encontraron clientes con nombre: {nombre_buscar}")
+                
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+
+# ========================================
+# TAB 4: EDITAR/ELIMINAR CLIENTE
+# ========================================
+with tab4:
+    st.header("Editar o eliminar cliente")
+    
+    cliente_id = st.number_input("ID del cliente", min_value=1, step=1)
+    
+    if st.button("🔍 Buscar cliente por ID", use_container_width=True):
+        try:
+            cliente = obtener_cliente_por_id(cliente_id)
+            
+            if cliente:
+                st.session_state.cliente_seleccionado = cliente
+                st.success(f"✅ Cliente encontrado: {cliente.nombre}")
+            else:
+                st.error(f"❌ No existe cliente con ID: {cliente_id}")
+                st.session_state.cliente_seleccionado = None
+        
+        except Exception as e:
+            st.error(f"❌ Error: {str(e)}")
+    
+    # Si hay un cliente seleccionado, mostrar formulario de edición
+    if "cliente_seleccionado" in st.session_state and st.session_state.cliente_seleccionado:
+        cliente = st.session_state.cliente_seleccionado
+        
+        st.markdown("---")
+        st.subheader("✏️ Editar datos")
+        
+        with st.form("form_editar_cliente"):
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                nuevo_nombre = st.text_input("Nombre completo", value=cliente.nombre)
+                nuevo_telefono = st.text_input("Teléfono", value=cliente.telefono or "")
+            
+            with col2:
+                nuevo_email = st.text_input("Email", value=cliente.email or "")
+            
+            col_btn1, col_btn2 = st.columns(2)
+            
+            with col_btn1:
+                actualizar = st.form_submit_button("💾 Actualizar datos", use_container_width=True)
+            
+            with col_btn2:
+                eliminar = st.form_submit_button("🗑️ Eliminar cliente", use_container_width=True, type="primary")
+            
+            if actualizar:
+                try:
+                    cliente_actualizado = modificar_cliente(
+                        cliente.id,
+                        nombre=nuevo_nombre if nuevo_nombre != cliente.nombre else None,
+                        telefono=nuevo_telefono if nuevo_telefono != cliente.telefono else None,
+                        email=nuevo_email if nuevo_email != cliente.email else None
+                    )
+                    
+                    if cliente_actualizado:
+                        st.success(f"✅ Cliente actualizado correctamente")
+                        st.session_state.cliente_seleccionado = cliente_actualizado
+                    else:
+                        st.error("❌ Error al actualizar el cliente")
+                
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+            
+            if eliminar:
+                try:
+                    confirmacion = st.checkbox(f"⚠️ Confirmo que quiero eliminar a {cliente.nombre}")
+                    
+                    if confirmacion:
+                        resultado = eliminar_cliente(cliente.id)
+                        
+                        if resultado:
+                            st.success(f"✅ Cliente {cliente.nombre} eliminado correctamente")
+                            st.session_state.cliente_seleccionado = None
+                        else:
+                            st.error("❌ Error al eliminar el cliente")
+                    else:
+                        st.warning("⚠️ Marca la casilla de confirmación para eliminar")
+                
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+
