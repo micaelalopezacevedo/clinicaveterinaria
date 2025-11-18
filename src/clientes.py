@@ -9,16 +9,6 @@ Cubre los requisitos funcionales RF1-RF4:
 - RF4: Listar todos los clientes
 """
 
-"""
-========================================
-TÍTULO: Módulo de Clientes
-FECHA: 18.11.2025
-DESCRIPCIÓN:
-Implementa toda la lógica relacionada con gestión de clientes.
-Cubre los requisitos funcionales RF1-RF4
-========================================
-"""
-
 from src.database import session, Cliente
 from sqlalchemy.exc import IntegrityError
 
