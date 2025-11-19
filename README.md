@@ -84,6 +84,8 @@ PRACTICA_FINAL/
 │ ├── mascotas.py
 │ ├── utils.py
 │ └── veterinarios.py
+│ └── exceptions.py
+│ └── logger.py
 │
 ├── tests/ (Módulo de pruebas TDD)
 │ ├── _init_.py
@@ -94,6 +96,9 @@ PRACTICA_FINAL/
 │ ├── test_mascotas.py
 │ ├── test_utils.py
 │ └── test_veterinarios.py
+│
+├── logs/ (Registro de eventos y errores) 
+│ └── clinica.log │
 │
 ├── venv/ (Entorno virtual)
 │
@@ -110,3 +115,5 @@ Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió
 - Segunda  reunión - Investigar el front-end (7/11/25): Se investigó a fondo sobre Streamlit, su uso y se contemplaron distintas formas de utilizarlo en el proyecto.
 - Tercera reunión - Investigar el back-end (10/11/25): investigamos el uso de SQLite para entender cómo implementarlo en el proyecto. Además, creamos un entorno virtual para trabajar de forma ordenada y asegurar el correcto funcionamiento del proyecto.
 - Cuarta reunión (11/11/25): Definimos las clases y funciones principales según los requisitos del proyecto.
+- Quinta reunión (18/11/25): Implementación de la página de clientes con validaciones y formateo de datos. Creación del sistema de excepciones personalizadas y logging centralizado. Configuración de la base de datos SQLite con SQLAlchemy.
+- Sexta reunión (19/11/25): Implementación de las páginas de mascotas y veterinarios. Integración de validaciones en todos los formularios y creación de búsquedas avanzadas por DNI e ID. Mejora del diseño visual de Streamlit.
