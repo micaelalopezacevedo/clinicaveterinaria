@@ -18,6 +18,7 @@ from src.clientes import (
 )
 from src.utils import Utilidades
 from src.mascotas import obtener_mascotas_por_cliente
+from src.exceptions import *
 
 # Configuración de la página
 st.set_page_config(
@@ -31,7 +32,7 @@ st.title("👤 Gestión de Clientes")
 st.markdown("---")
 
 # Crear tabs para organizar funcionalidades
-tab1, tab2, tab3, tab4 = st.tabs(["📝 Registrar", "📋 Listar", "🔍 Buscar", "✏️ Editar/Eliminar"])
+tab1, tab2, tab3, tab4 = st.tabs(["Registrar", "Listar", "Buscar", "Editar/Eliminar"])
 
 # ========================================
 # TAB 1: REGISTRAR CLIENTE
@@ -50,14 +51,14 @@ with tab1:
             telefono = st.text_input("Teléfono", placeholder="Ej: 600123456")
             email = st.text_input("Email", placeholder="Ej: juan@email.com")
         
-        st.markdown("**Los campos marcados con * son obligatorios**")
+        st.markdown("*Los campos marcados con * son obligatorios*")
         
         submitted = st.form_submit_button("Registrar cliente", use_container_width=True)
 
         if submitted:
             # VALIDACIONES
             if not dni or not nombre:
-                st.error("El nomrbe y el DNI son campos obligatorios")
+                st.error("El nombre y el DNI son campos obligatorios")
             # NOMBRE
             if not Utilidades.validar_nombre(nombre):
                 st.error("El nombre solo puede contener letras")
@@ -65,28 +66,30 @@ with tab1:
             if not Utilidades.validar_dni(dni):
                 st.error("El DNI ha de tener el siguiente formato: 12345678A")
             # EMAIL
-            if not Utilidades.validar_email(email):
+            if email and not Utilidades.validar_email(email):
                 st.error("El email ha de tener el siguiente formato: juan@email.com")
             # TELÉFONO
-            if not Utilidades.validar_telefono(telefono):
-                st.error("El formato de teléfono tiene que tener el siguiente 123 456 789")
+            if telefono and not Utilidades.validar_telefono(telefono):
+                st.error("El formato de teléfono tiene que ser: 123456789")
 
-            # SI PASA LAS VALIDACIONES
-            if Utilidades.validar_nombre and Utilidades.validar_dni and Utilidades.validar_email and Utilidades.validar_telefono:
-                # FORMATEO
-                nombre = Utilidades.formatear_nombre(nombre)
-                dni = Utilidades.formatear_dni(dni)
-                telefono = Utilidades.formatear_telefono(telefono)
-                email = Utilidades.formatear_email(email)
-
-                try:
-                    cliente = crear_cliente(nombre, dni, telefono, email)
-                    if cliente:
-                        st.success(f"Cliente **{nombre}** registrado correctamente con ID: {cliente.id}")
-                    else:
-                        st.error("Error al crear el cliente. Ya existe un cliente con este DNI")
-                except Exception as e:
-                    st.error(f"Error: {str(e)}")
+            # SI PASA LAS VALIDACIONES...
+            if Utilidades.validar_nombre(nombre) and Utilidades.validar_dni(dni):
+                if (not email or Utilidades.validar_email(email)) and (not telefono or Utilidades.validar_telefono(telefono)):
+                    # FORMATEO para pasar valores estándar a la base de datos
+                    nombre = Utilidades.formatear_nombre(nombre)
+                    dni = Utilidades.formatear_dni(dni)
+                    telefono = Utilidades.formatear_telefono(telefono) if telefono else None
+                    email = Utilidades.formatear_email(email) if email else None
+                    #Crear el cliente
+                    try:
+                        cliente = crear_cliente(nombre, dni, telefono, email)
+                        if cliente:
+                            st.success(f"Cliente *{nombre}* registrado correctamente con ID: {cliente.id}")
+                        else:
+                            st.error("Error al crear el cliente. Ya existe un cliente con este DNI")
+                    # Error de integridad de la base de datos
+                    except Exception as e:
+                        st.error(f"Error: {str(e)}")
 
 # ========================================
 # TAB 2: LISTAR CLIENTES
@@ -108,18 +111,18 @@ with tab2:
                     col1, col2 = st.columns(2)
                     
                     with col1:
-                        st.write(f"**ID:** {cliente.id}")
-                        st.write(f"**Nombre:** {cliente.nombre}")
-                        st.write(f"**DNI:** {cliente.dni}")
+                        st.write(f"*ID:* {cliente.id}")
+                        st.write(f"*Nombre:* {cliente.nombre}")
+                        st.write(f"*DNI:* {cliente.dni}")
                     
                     with col2:
-                        st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
-                        st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                        st.write(f"*Teléfono:* {cliente.telefono or 'No registrado'}")
+                        st.write(f"*Email:* {cliente.email or 'No registrado'}")
                     
                     # Mostrar mascotas del cliente
                     mascotas = obtener_mascotas_por_cliente(cliente.id)
                     if mascotas:
-                        st.markdown("**🐾 Mascotas:**")
+                        st.markdown("🐾 Mascotas:")
                         for mascota in mascotas:
                             st.write(f"- {mascota.nombre} ({mascota.especie})")
                     else:
@@ -154,13 +157,13 @@ with tab3:
                         
                         col1, col2 = st.columns(2)
                         with col1:
-                            st.write(f"**ID:** {cliente.id}")
-                            st.write(f"**Nombre:** {cliente.nombre}")
-                            st.write(f"**DNI:** {cliente.dni}")
+                            st.write(f"*ID:* {cliente.id}")
+                            st.write(f"*Nombre:* {cliente.nombre}")
+                            st.write(f"*DNI:* {cliente.dni}")
                         
                         with col2:
-                            st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
-                            st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                            st.write(f"*Teléfono:* {cliente.telefono or 'No registrado'}")
+                            st.write(f"*Email:* {cliente.email or 'No registrado'}")
                     else:
                         st.error(f"No se encontró ningún cliente con DNI: {dni_buscar}")
                 
@@ -185,13 +188,13 @@ with tab3:
                                 col1, col2 = st.columns(2)
                                 
                                 with col1:
-                                    st.write(f"**ID:** {cliente.id}")
-                                    st.write(f"**Nombre:** {cliente.nombre}")
-                                    st.write(f"**DNI:** {cliente.dni}")
+                                    st.write(f"*ID:* {cliente.id}")
+                                    st.write(f"*Nombre:* {cliente.nombre}")
+                                    st.write(f"*DNI:* {cliente.dni}")
                                 
                                 with col2:
-                                    st.write(f"**Teléfono:** {cliente.telefono or 'No registrado'}")
-                                    st.write(f"**Email:** {cliente.email or 'No registrado'}")
+                                    st.write(f"*Teléfono:* {cliente.telefono or 'No registrado'}")
+                                    st.write(f"*Email:* {cliente.email or 'No registrado'}")
                     else:
                         st.error(f"No se encontraron clientes con nombre: {nombre_buscar}")
                 
@@ -204,7 +207,7 @@ with tab3:
 with tab4:
     st.header("Editar o eliminar cliente")
     
-    cliente_dni = st.text_input("DNI", placeholder = "DNI del cliente")
+    cliente_dni = st.text_input("DNI", placeholder="DNI del cliente")
     
     if st.button("Buscar cliente por DNI", use_container_width=True):
         try:
@@ -214,7 +217,7 @@ with tab4:
                 st.session_state.cliente_seleccionado = cliente
                 st.success(f"Cliente encontrado: {cliente.nombre}")
             else:
-                st.error(f"No existe cliente con ID: {cliente_dni}")
+                st.error(f"No existe cliente con DNI: {cliente_dni}")
                 st.session_state.cliente_seleccionado = None
         
         except Exception as e:
@@ -246,22 +249,43 @@ with tab4:
                 eliminar = st.form_submit_button("Eliminar cliente", use_container_width=True, type="primary")
             
             if actualizar:
-                try:
-                    cliente_actualizado = modificar_cliente(
-                        cliente.id,
-                        nombre=nuevo_nombre if nuevo_nombre != cliente.nombre else None,
-                        telefono=nuevo_telefono if nuevo_telefono != cliente.telefono else None,
-                        email=nuevo_email if nuevo_email != cliente.email else None
-                    )
-                    
-                    if cliente_actualizado:
-                        st.success(f"Cliente actualizado correctamente")
-                        st.session_state.cliente_seleccionado = cliente_actualizado
-                    else:
-                        st.error("Error al actualizar el cliente")
+                # VALIDACIONES EN ACTUALIZACIÓN
+                errores = []
                 
-                except Exception as e:
-                    st.error(f"Error: {str(e)}")
+                if not Utilidades.validar_nombre(nuevo_nombre):
+                    errores.append("El nombre solo puede contener letras")
+                
+                if nuevo_email and not Utilidades.validar_email(nuevo_email):
+                    errores.append("El email no tiene un formato válido")
+                
+                if nuevo_telefono and not Utilidades.validar_telefono(nuevo_telefono):
+                    errores.append("El teléfono debe tener 9 dígitos")
+                
+                if errores:
+                    for error in errores:
+                        st.error(error)
+                else:
+                    # FORMATEO
+                    nuevo_nombre = Utilidades.formatear_nombre(nuevo_nombre)
+                    nuevo_telefono = Utilidades.formatear_telefono(nuevo_telefono) if nuevo_telefono else None
+                    nuevo_email = Utilidades.formatear_email(nuevo_email) if nuevo_email else None
+                    
+                    try:
+                        cliente_actualizado = modificar_cliente(
+                            cliente.id,
+                            nombre=nuevo_nombre if nuevo_nombre != cliente.nombre else None,
+                            telefono=nuevo_telefono if nuevo_telefono != cliente.telefono else None,
+                            email=nuevo_email if nuevo_email != cliente.email else None
+                        )
+                        
+                        if cliente_actualizado:
+                            st.success(f"Cliente actualizado correctamente")
+                            st.session_state.cliente_seleccionado = cliente_actualizado
+                        else:
+                            st.error("Error al actualizar el cliente")
+                    
+                    except Exception as e:
+                        st.error(f"Error: {str(e)}")
             
             if eliminar:
                 try:

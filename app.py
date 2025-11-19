@@ -8,12 +8,7 @@ Punto de entrada principal de la aplicación.
 
 import streamlit as st
 
-def mostrar_inicio():
-    """
-    Muestra página de bienvenida con descripción de la app
-    """
-
-def mostrar_estadisticas():
-    """
-    Muestra panel de estadísticas generales en la página de inicio
-    """
+st.title("Gestión de clínica veterinaria")
+st.write("Marcos García, Micaela López, Alejandro González")
+st.divider()
+st.write("Esta página de inicio la completaremos más adelante")

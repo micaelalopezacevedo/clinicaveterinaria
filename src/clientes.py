@@ -11,6 +11,7 @@ Cubre los requisitos funcionales RF1-RF4:
 
 from src.database import session, Cliente
 from sqlalchemy.exc import IntegrityError
+import src.exceptions as ex
 
 # ===================================
 # CREAR (CREATE)
@@ -23,10 +24,6 @@ def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None
     Return: Cliente creado o None si error
     """
     try:
-        # Validar campos obligatorios
-        if not nombre or not dni:
-            print("Error: Nombre y DNI son obligatorios")
-            return None
         
         # Crear objeto Cliente
         nuevo_cliente = Cliente(
@@ -47,7 +44,7 @@ def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None
     
     except IntegrityError:
         session.rollback()
-        print(f"Error: DNI {dni} ya existe")
+        ex.DNIDuplicadoException(dni)
         return None
     
     except Exception as e:
