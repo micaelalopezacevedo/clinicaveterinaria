@@ -6,23 +6,28 @@ Gestiona engine, sesiones, creación de tablas y relaciones.
 Define también los 4 modelos: Cliente, Mascota, Veterinario, Cita.
 """
 
+
 from sqlalchemy import create_engine, Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+
 
 # ==========================================
 # 1. MOTOR DE BASE DE DATOS (ENGINE)
 # ==========================================
 engine = create_engine('sqlite:///clinica.db', echo=False)
 
+
 # ==========================================
 # 2. BASE DECLARATIVA
 # ==========================================
 Base = declarative_base()
 
+
 # ==========================================
 # 3. MODELOS (TABLAS)
 # ==========================================
+
 
 class Cliente(Base):
     """
@@ -53,6 +58,7 @@ class Cliente(Base):
     
     def __repr__(self):
         return f"<Cliente(id={self.id}, nombre='{self.nombre}', dni='{self.dni}')>"
+
 
 
 class Mascota(Base):
@@ -96,6 +102,7 @@ class Mascota(Base):
         return f"<Mascota(id={self.id}, nombre='{self.nombre}', especie='{self.especie}')>"
 
 
+
 class Veterinario(Base):
     """
     TABLA: veterinarios
@@ -131,6 +138,7 @@ class Veterinario(Base):
         return f"<Veterinario(id={self.id}, nombre='{self.nombre}', especialidad='{self.especialidad}')>"
 
 
+
 class Cita(Base):
     """
     TABLA: citas
@@ -140,10 +148,10 @@ class Cita(Base):
     Campos:
     - id: Identificador único
     - fecha: Fecha de la cita (formato: YYYY-MM-DD)
-    - hora: Hora de la cita (formato: HH:MM)
-    - motivo: Razón de la consulta
-    - diagnostico: Diagnóstico o notas del veterinario
-    - estado: Estado de la cita ('pendiente', 'realizada', 'cancelada')
+    - hora: Hora de la cita (formato: HH:MM) - ALMACENADO COMO STRING
+    - motivo: Razón de la consulta (OPCIONAL)
+    - diagnostico: Diagnóstico o notas del veterinario (OPCIONAL)
+    - estado: Estado de la cita ('Pendiente', 'Confirmada', 'Realizada', 'Cancelada')
     - mascota_id: Clave foránea a Mascota
     - veterinario_id: Clave foránea a Veterinario
     
@@ -155,10 +163,10 @@ class Cita(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     fecha = Column(Date, nullable=False)
-    hora = Column(String(10), nullable=False)  # Formato: HH:MM
-    motivo = Column(String(200), nullable=False)
+    hora = Column(String(5), nullable=False)
+    motivo = Column(String(200))
     diagnostico = Column(String(500))
-    estado = Column(String(20), default='pendiente')  # 'pendiente', 'realizada', 'cancelada'
+    estado = Column(String(20), default='Pendiente')
     
     # Claves foráneas
     mascota_id = Column(Integer, ForeignKey('mascotas.id'), nullable=False)
@@ -169,18 +177,21 @@ class Cita(Base):
     veterinario = relationship("Veterinario", back_populates="citas")
     
     def __repr__(self):
-        return f"<Cita(id={self.id}, fecha={self.fecha}, estado='{self.estado}')>"
+        return f"<Cita(id={self.id}, fecha={self.fecha}, hora={self.hora}, estado='{self.estado}')>"
 
 
 # ==========================================
 # 4. CREAR TABLAS Y SESIÓN
 # ==========================================
 
+
 # Crea todas las tablas en la base de datos si no existen
 Base.metadata.create_all(engine)
+
 
 # Configurar sesión para operaciones CRUD
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 print("✅ Base de datos configurada correctamente")
