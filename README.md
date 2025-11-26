@@ -118,3 +118,4 @@ Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió
 - Quinta reunión (18/11/25): Implementación de la página de clientes con validaciones y formateo de datos. Creación del sistema de excepciones personalizadas y logging centralizado. Configuración de la base de datos SQLite con SQLAlchemy.
 - Sexta reunión (19/11/25): Implementación de las páginas de mascotas y veterinarios. Integración de validaciones en todos los formularios y creación de búsquedas avanzadas por DNI e ID. Mejora del diseño visual de Streamlit.
 - Séptima reunión (23/11/25): Implementación de páginas restantes, revisión puntual de funcionamiento. Restore de la BBDD debido a un cambio en el formato de las fechas que no era compatible con el dateInput de st.
+- Octava reunión(26/11/25)
