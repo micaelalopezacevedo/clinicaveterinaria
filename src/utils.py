@@ -27,8 +27,8 @@ class Utilidades:
     def validar_nombre(nombre: str) -> bool:
         """Valida que nombre solo contenga letras"""
         nombre = nombre.lower().strip()
-        patron = r"[A-Za-z]+$"
-        return re.match(patron, nombre) is not None
+        patron = r"^[A-Za-zÁÉÍÓÚáéíóúÑñ -]+$"
+        return re.match(patron, nombre)
     
     @staticmethod
     def validar_dni(dni: str) -> bool:
