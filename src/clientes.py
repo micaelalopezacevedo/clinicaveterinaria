@@ -1,212 +1,234 @@
 """
 título: módulo de clientes
-fecha: 11.11.2025
-descripción: implementa toda la lógica relacionada con la gestión de clientes.
-Cubre los requisitos funcionales RF1-RF4:
-- RF1: Registrar nuevos clientes
-- RF2: Consultar, editar y eliminar clientes
-- RF3: Buscar clientes por nombre o DNI
-- RF4: Listar todos los clientes
+fecha: 03.12.2025
+descripción: lógica completa de gestión de clientes.
+
+CÓMO FUNCIONA:
+===============
+
+1. _RepositorioCliente: Acceso a BD (CRUD)
+   └─ crear(), obtener_por_id(), listar_todos(), etc.
+   └─ NUNCA tiene lógica de negocio
+
+2. _ServicioCliente: Lógica de negocio
+   └─ crear_cliente(): valida + verifica DNI + crea
+   └─ Usa Utilidades para validaciones
+   └─ Usa _RepositorioCliente para BD
+
+3. Interfaz pública: 8 funciones
+   └─ Lo único que importa Streamlit
+   └─ Wrappers simples que deleguen a ServicioCliente o RepositorioCliente
 """
 
 from src.database import session, Cliente
+from src.exceptions import ClienteNoEncontradoException, DNIDuplicadoException, ValidacionException
+from src.logger import Logger
 from sqlalchemy.exc import IntegrityError
-import src.exceptions as ex
 
-# ===================================
-# CREAR (CREATE)
-# ===================================
+# ========================
+# REPOSITORIO (PRIVADO)
+# ========================
+# RESPONSABILIDAD: SOLO acceso a datos (CRUD)
+# No hay lógica de negocio aquí
 
-def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None) -> Cliente:
-    """
-    Crea nuevo cliente
-    Args: nombre (str), dni (str), telefono (str, opcional), email (str, opcional)
-    Return: Cliente creado o None si error
-    """
-    try:
-        
-        # Crear objeto Cliente
-        nuevo_cliente = Cliente(
+class _RepositorioCliente:
+    """Encapsula acceso a BD - CRUD básico sin lógica"""
+    
+    @staticmethod
+    def crear(nombre: str, dni: str, telefono: str = None, email: str = None):
+        """CRUD: CREATE"""
+        cliente = Cliente(
             nombre=nombre,
             dni=dni,
             telefono=telefono,
             email=email
         )
-        
-        # Añadir a la sesión
-        session.add(nuevo_cliente)
-        
-        # Confirmar cambios
+        session.add(cliente)
         session.commit()
-        
-        print(f"✅ Cliente creado: {nombre} (ID: {nuevo_cliente.id})")
-        return nuevo_cliente
+        Logger.info(f"Cliente creado con ID: {cliente.id}")
+        return cliente
     
-    except IntegrityError:
-        session.rollback()
-        ex.DNIDuplicadoException(dni)
-        return None
-    
-    except Exception as e:
-        session.rollback()
-        print(f"Error al crear cliente: {str(e)}")
-        return None
-
-
-# ===================================
-# LEER (READ)
-# ===================================
-
-def listar_clientes() -> list:
-    """
-    Devuelve todos los clientes
-    Args: ninguno
-    Return: Lista de clientes
-    """
-    try:
-        clientes = session.query(Cliente).all()
-        return clientes
-    except Exception as e:
-        print(f"❌ Error al listar clientes: {str(e)}")
-        return []
-
-
-def obtener_cliente_por_id(cliente_id: int) -> Cliente:
-    """
-    Busca cliente por ID
-    Args: cliente_id (int)
-    Return: Cliente encontrado o None
-    """
-    try:
+    @staticmethod
+    def obtener_por_id(cliente_id: int):
+        """CRUD: READ por ID"""
         cliente = session.query(Cliente).filter_by(id=cliente_id).first()
-        return cliente
-    except Exception as e:
-        print(f"❌ Error al buscar cliente: {str(e)}")
-        return None
-
-
-def buscar_cliente_por_dni(dni: str) -> Cliente:
-    """
-    Busca cliente por DNI (búsqueda exacta)
-    Args: dni (str)
-    Return: Cliente encontrado o None
-    """
-    try:
-        cliente = session.query(Cliente).filter_by(dni=dni).first()
-        return cliente
-    except Exception as e:
-        print(f"❌ Error al buscar por DNI: {str(e)}")
-        return None
-
-
-def buscar_cliente_por_nombre(nombre: str) -> list:
-    """
-    Busca clientes por nombre (búsqueda parcial)
-    Args: nombre (str)
-    Return: Lista de clientes que coinciden
-    """
-    try:
-        clientes = session.query(Cliente).filter(
-            Cliente.nombre.like(f"%{nombre}%")
-        ).all()
-        return clientes
-    except Exception as e:
-        print(f"Error al buscar por nombre: {str(e)}")
-        return []
-
-
-# ===================================
-# ACTUALIZAR (UPDATE)
-# ===================================
-
-def modificar_cliente(cliente_id: int, nombre: str = None, telefono: str = None, email: str = None) -> Cliente:
-    """
-    Modifica datos de cliente existente
-    Args: cliente_id (int), nombre (str, opcional), telefono (str, opcional), email (str, opcional)
-    Return: Cliente modificado o None si no existe
-    """
-    try:
-        # Buscar cliente
-        cliente = obtener_cliente_por_id(cliente_id)
-        
         if not cliente:
-            print(f"No existe cliente con ID: {cliente_id}")
-            return None
-        
-        # Actualizar solo campos proporcionados
-        if nombre is not None:
-            cliente.nombre = nombre
-        if telefono is not None:
-            cliente.telefono = telefono
-        if email is not None:
-            cliente.email = email
-        
-        # Confirmar cambios
-        session.commit()
-        
-        print(f"Cliente actualizado: {cliente.nombre}")
+            raise ClienteNoEncontradoException(cliente_id)
         return cliente
     
-    except Exception as e:
-        session.rollback()
-        print(f"Error al modificar cliente: {str(e)}")
-        return None
-
-
-# ===================================
-# ELIMINAR (DELETE)
-# ===================================
-
-def eliminar_cliente(cliente_id: int) -> bool:
-    """
-    Elimina cliente (y sus mascotas asociadas)
-    Args: cliente_id (int)
-    Return: True si éxito, False si error/no existe
-    """
-    try:
-        # Buscar cliente
-        cliente = obtener_cliente_por_id(cliente_id)
-        
-        if not cliente:
-            print(f"No existe cliente con ID: {cliente_id}")
-            return False
-        
+    @staticmethod
+    def listar_todos():
+        """CRUD: READ todos"""
+        return session.query(Cliente).order_by(Cliente.nombre).all()
+    
+    @staticmethod
+    def obtener_por_dni(dni: str):
+        """CRUD: READ por DNI"""
+        return session.query(Cliente).filter_by(dni=dni).first()
+    
+    @staticmethod
+    def obtener_por_nombre(nombre: str):
+        """CRUD: READ búsqueda parcial por nombre"""
+        return session.query(Cliente).filter(
+            Cliente.nombre.like(f"%{nombre}%")
+        ).order_by(Cliente.nombre).all()
+    
+    @staticmethod
+    def actualizar(cliente: Cliente, **campos) -> Cliente:
+        """CRUD: UPDATE"""
+        for campo, valor in campos.items():
+            if valor is not None:
+                setattr(cliente, campo, valor)
+        session.commit()
+        session.refresh(cliente)
+        Logger.info(f"Cliente {cliente.id} actualizado")
+        return cliente
+    
+    @staticmethod
+    def eliminar(cliente: Cliente) -> bool:
+        """CRUD: DELETE"""
         nombre = cliente.nombre
-        
-        # Eliminar
         session.delete(cliente)
         session.commit()
-        
-        print(f"Cliente eliminado: {nombre}")
+        Logger.info(f"Cliente {nombre} eliminado")
         return True
     
-    except Exception as e:
-        session.rollback()
-        print(f"Error al eliminar cliente: {str(e)}")
-        return False
+    @staticmethod
+    def contar_total():
+        """CRUD: COUNT todos"""
+        try:
+            return session.query(Cliente).count()
+        except Exception as e:
+            Logger.log_excepcion(e, "contar_total")
+            return 0
+    
+    @staticmethod
+    def existe(cliente_id: int) -> bool:
+        """CRUD: READ para verificar existencia"""
+        try:
+            return session.query(Cliente).filter_by(id=cliente_id).first() is not None
+        except Exception as e:
+            Logger.log_excepcion(e, "existe")
+            return False
+    
+    @staticmethod
+    def dni_existe(dni: str, excluir_id: int = None) -> bool:
+        """CRUD: READ para verificar DNI duplicado (excluyendo un ID si se proporciona)"""
+        q = session.query(Cliente).filter_by(dni=dni)
+        if excluir_id:
+            q = q.filter(Cliente.id != excluir_id)
+        return q.first() is not None
 
 
-# ===================================
-# AUXILIARES
-# ===================================
+# ========================
+# SERVICIO (PRIVADO)
+# ========================
+# RESPONSABILIDAD: Lógica de negocio
+# Usa Utilidades (validaciones) + _RepositorioCliente (BD)
 
-def contar_clientes() -> int:
-    """
-    Cuenta total de clientes
-    Args: ninguno
-    Return: Número de clientes (int)
-    """
+class _ServicioCliente:
+    """Orquesta validaciones + acceso a BD"""
+    
+    @staticmethod
+    def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None):
+        """
+        Crea un cliente: 1) Valida 2) Verifica DNI 3) Crea
+        
+        Puede lanzar ValidacionException o DNIDuplicadoException
+        """
+        try:
+            # PASO 1: VALIDAR CAMPOS OBLIGATORIOS
+            if not nombre or not dni:
+                raise ValidacionException("nombre y DNI", "son campos obligatorios")
+            
+            # PASO 2: VERIFICAR DNI DUPLICADO
+            if _RepositorioCliente.dni_existe(dni):
+                raise DNIDuplicadoException(dni, "Cliente")
+            
+            # PASO 3: CREAR EN BD (delegado al repositorio)
+            return _RepositorioCliente.crear(nombre, dni, telefono, email)
+        
+        except (DNIDuplicadoException, ValidacionException):
+            session.rollback()
+            raise
+        except IntegrityError:
+            session.rollback()
+            Logger.error("Error de integridad, probablemente DNI duplicado")
+            raise
+        except Exception as e:
+            session.rollback()
+            Logger.log_excepcion(e, "crear_cliente")
+            raise
+    
+    @staticmethod
+    def modificar_cliente(cliente_id: int, nombre: str = None, telefono: str = None, email: str = None):
+        """
+        Modifica un cliente: 1) Obtiene 2) Valida cambios 3) Actualiza
+        """
+        try:
+            # PASO 1: OBTENER CLIENTE
+            cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+            
+            # PASO 2: VALIDAR CAMBIOS (opcionales pero si se proporcionan, validar)
+            if nombre is not None and not nombre:
+                raise ValidacionException("nombre", "no puede estar vacío")
+            
+            # PASO 3: ACTUALIZAR (delegado al repositorio)
+            return _RepositorioCliente.actualizar(
+                cliente,
+                nombre=nombre,
+                telefono=telefono,
+                email=email
+            )
+        
+        except (ClienteNoEncontradoException, ValidacionException):
+            session.rollback()
+            raise
+        except Exception as e:
+            session.rollback()
+            Logger.log_excepcion(e, "modificar_cliente")
+            raise
+
+
+# ========================
+# INTERFAZ PÚBLICA (8 funciones)
+# ========================
+# Lo ÚNICO que usa Streamlit
+# Todo está aquí, NADA en las clases privadas
+
+def crear_cliente(nombre: str, dni: str, telefono: str = None, email: str = None):
+    """Crea un nuevo cliente"""
+    return _ServicioCliente.crear_cliente(nombre, dni, telefono, email)
+
+def listar_clientes():
+    """Devuelve todos los clientes"""
+    return _RepositorioCliente.listar_todos()
+
+def obtener_cliente_por_id(cliente_id: int):
+    """Obtiene un cliente por ID"""
+    return _RepositorioCliente.obtener_por_id(cliente_id)
+
+def buscar_cliente_por_dni(dni: str):
+    """Busca un cliente por DNI"""
+    return _RepositorioCliente.obtener_por_dni(dni)
+
+def buscar_cliente_por_nombre(nombre: str):
+    """Busca clientes por nombre (búsqueda parcial)"""
+    return _RepositorioCliente.obtener_por_nombre(nombre)
+
+def modificar_cliente(cliente_id: int, nombre: str = None, telefono: str = None, email: str = None):
+    """Modifica un cliente existente"""
+    return _ServicioCliente.modificar_cliente(cliente_id, nombre, telefono, email)
+
+def eliminar_cliente(cliente_id: int):
+    """Elimina un cliente"""
     try:
-        return session.query(Cliente).count()
+        cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+        return _RepositorioCliente.eliminar(cliente)
     except Exception as e:
-        print(f"Error al contar clientes: {str(e)}")
-        return 0
+        Logger.log_excepcion(e, "eliminar_cliente")
+        raise
 
-
-def cliente_existe(cliente_id: int) -> bool:
-    """
-    Verifica si existe cliente con ese ID
-    Args: cliente_id (int)
-    Return: True si existe, False si no
-    """
-    return obtener_cliente_por_id(cliente_id) is not None
+def contar_clientes():
+    """Cuenta total de clientes"""
+    return _RepositorioCliente.contar_total()
