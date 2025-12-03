@@ -203,6 +203,8 @@ class BuscadorCliente:
                 return
             
             try:
+                if Utilidades.validar_dni(dni) == False:
+                     st.error(f"❌ Formato de DNI no válido (ejemplo de formaro: 12345678A): {dni}")
                 cliente = buscar_cliente_por_dni(dni)
                 if cliente:
                     st.success("✅ Encontrado")
