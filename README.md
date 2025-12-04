@@ -120,3 +120,4 @@ Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió
 - Séptima reunión (23/11/25): Implementación de páginas restantes, revisión puntual de funcionamiento. Restore de la BBDD debido a un cambio en el formato de las fechas que no era compatible con el dateInput de st.
 - Octava reunión (26/11/25): Implementación de la página de análisis. Actualización del fichero utils y revisión del cumplimiento de los principios SOLID en todas las páginas. Incorporación de la librería plotly para la visualización de los gráficos interactivos en Streamlit.
 - Novena reunión (3/12/25): Actualizar páginas pendientes para seguir los principios SOLID. Arreglar bugs y errores de Streamlit para un mejor funcionamiento de la app.
+- Décima reunión (04/12/2025): Mejora de app.py y revisión de exceptions.py y logger.py. También hemos añadido algún test que nos faltaba.

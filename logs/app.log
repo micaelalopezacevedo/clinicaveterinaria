@@ -1,0 +1,211 @@
+2025-12-04 19:22:27 - clinica_veterinaria - DEBUG - 🔍 Mensaje de DEBUG
+2025-12-04 19:22:27 - clinica_veterinaria - INFO - ✅ Mensaje de INFO
+2025-12-04 19:22:27 - clinica_veterinaria - WARNING - ⚠ Mensaje de WARNING
+2025-12-04 19:22:27 - clinica_veterinaria - ERROR - ❌ Mensaje de ERROR
+2025-12-04 19:23:56 - clinica_veterinaria - DEBUG - 🔍 Mensaje de DEBUG
+2025-12-04 19:23:56 - clinica_veterinaria - INFO - ✅ Mensaje de INFO
+2025-12-04 19:23:56 - clinica_veterinaria - WARNING - ⚠ Mensaje de WARNING
+2025-12-04 19:23:56 - clinica_veterinaria - ERROR - ❌ Mensaje de ERROR
+2025-12-04 19:24:12 - clinica_veterinaria - ERROR - ❌ Error en test_context: ClienteNoEncontradoException: Cliente con ID 1 no encontrado
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+src.exceptions.ClienteNoEncontradoException: ClienteNoEncontradoException: Cliente con ID 1 no encontrado
+2025-12-04 19:36:36 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:36:36 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:36:36 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:37:09 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:37:09 - clinica_veterinaria - DEBUG - 🔍 Lista de clientes vacía
+2025-12-04 19:37:09 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📋 Clientes
+2025-12-04 19:37:17 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:37:17 - clinica_veterinaria - WARNING - ⚠ Intento de acceder a mascotas sin clientes
+2025-12-04 19:37:17 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 🐾 Mascotas
+2025-12-04 19:37:19 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:37:19 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 👨‍⚕️ Veterinarios
+2025-12-04 19:37:20 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:37:20 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📅 Citas
+2025-12-04 19:37:21 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:37:21 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:37:21 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:41:22 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:41:22 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:41:22 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:41:26 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:41:26 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:41:26 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:42:13 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:42:13 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:42:13 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:42:14 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:42:14 - clinica_veterinaria - DEBUG - 🔍 Lista de clientes vacía
+2025-12-04 19:42:14 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📋 Clientes
+2025-12-04 19:42:41 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:42:41 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:42:41 - clinica_veterinaria - DEBUG - 🔍 Página renderizada: 📊 Dashboard
+2025-12-04 19:53:06 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:53:06 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:58:12 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:12 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 19:58:17 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:17 - clinica_veterinaria - ERROR - ❌ Error: 'charmap' codec can't decode byte 0x9d in position 2934: character maps to <undefined>
+2025-12-04 19:58:21 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:21 - clinica_veterinaria - ERROR - ❌ Error: 'charmap' codec can't decode byte 0x90 in position 708: character maps to <undefined>
+2025-12-04 19:58:22 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:22 - clinica_veterinaria - ERROR - ❌ Error: 'charmap' codec can't decode byte 0x9d in position 3645: character maps to <undefined>
+2025-12-04 19:58:23 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:23 - clinica_veterinaria - ERROR - ❌ Error: `set_page_config()` can only be called once per app page, and must be called as the first Streamlit command in your script.
+
+For more information refer to the [docs](https://docs.streamlit.io/library/api-reference/utilities/st.set_page_config).
+2025-12-04 19:58:24 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:24 - clinica_veterinaria - ERROR - ❌ Error: 'charmap' codec can't decode byte 0x90 in position 1224: character maps to <undefined>
+2025-12-04 19:58:33 - clinica_veterinaria - DEBUG - 🔍 Session state inicializado
+2025-12-04 19:58:33 - clinica_veterinaria - INFO - ✅ Dashboard mostrado
+2025-12-04 20:00:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-04 20:00:32 - clinica_veterinaria - INFO - ✅ Dashboard principal cargado correctamente.
+2025-12-04 20:03:27 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-04 20:03:27 - clinica_veterinaria - INFO - ✅ Página principal cargado correctamente.
+2025-12-04 20:04:06 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-04 20:04:06 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente.
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente 1 actualizado
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:39:41 - clinica_veterinaria - INFO - ✅ Cliente Mica eliminado
+2025-12-04 20:39:41 - clinica_veterinaria - ERROR - ❌ Error en eliminar_cliente: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 226, in eliminar_cliente
+    cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 56, in obtener_por_id
+    raise ClienteNoEncontradoException(cliente_id)
+src.exceptions.ClienteNoEncontradoException: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:39 - clinica_veterinaria - INFO - ✅ Cliente 1 actualizado
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Cliente Mica eliminado
+2025-12-04 20:44:40 - clinica_veterinaria - ERROR - ❌ Error en eliminar_cliente: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 226, in eliminar_cliente
+    cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 56, in obtener_por_id
+    raise ClienteNoEncontradoException(cliente_id)
+src.exceptions.ClienteNoEncontradoException: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota 1 actualizada
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota Luna eliminada
+2025-12-04 20:44:40 - clinica_veterinaria - ERROR - ❌ Error en eliminar_mascota: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 236, in eliminar_mascota
+    mascota = _RepositorioMascota.obtener_por_id(mascota_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 59, in obtener_por_id
+    raise MascotaNoEncontradaException(mascota_id)
+src.exceptions.MascotaNoEncontradaException: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+2025-12-04 20:44:40 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente 1 actualizado
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Cliente Mica eliminado
+2025-12-04 20:45:59 - clinica_veterinaria - ERROR - ❌ Error en eliminar_cliente: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 226, in eliminar_cliente
+    cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 56, in obtener_por_id
+    raise ClienteNoEncontradoException(cliente_id)
+src.exceptions.ClienteNoEncontradoException: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota 1 actualizada
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota Luna eliminada
+2025-12-04 20:45:59 - clinica_veterinaria - ERROR - ❌ Error en eliminar_mascota: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 236, in eliminar_mascota
+    mascota = _RepositorioMascota.obtener_por_id(mascota_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 59, in obtener_por_id
+    raise MascotaNoEncontradaException(mascota_id)
+src.exceptions.MascotaNoEncontradaException: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+2025-12-04 20:45:59 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 2
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente 1 actualizado
+2025-12-04 20:48:08 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Cliente creado con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Cliente Mica eliminado
+2025-12-04 20:48:09 - clinica_veterinaria - ERROR - ❌ Error en eliminar_cliente: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 226, in eliminar_cliente
+    cliente = _RepositorioCliente.obtener_por_id(cliente_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\clientes.py", line 56, in obtener_por_id
+    raise ClienteNoEncontradoException(cliente_id)
+src.exceptions.ClienteNoEncontradoException: ClienteNoEncontradoException: Cliente con ID 999 no encontrado
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 2
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota 1 actualizada
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota Luna eliminada
+2025-12-04 20:48:09 - clinica_veterinaria - ERROR - ❌ Error en eliminar_mascota: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+Traceback (most recent call last):
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 236, in eliminar_mascota
+    mascota = _RepositorioMascota.obtener_por_id(mascota_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alejandro\clinicaveterinaria\src\mascotas.py", line 59, in obtener_por_id
+    raise MascotaNoEncontradaException(mascota_id)
+src.exceptions.MascotaNoEncontradaException: MascotaNoEncontradaException: Mascota con ID 999 no encontrada
+2025-12-04 20:48:09 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 1

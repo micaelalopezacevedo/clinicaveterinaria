@@ -6,91 +6,95 @@ Cada excepción hereda de ClinicaException (base personalizada).
 Se lanzan en operaciones CRUD y validaciones cuando algo falla.
 """
 
-# EXCEPCIÓN BASE
+# =====================================
+# EXCEPCIÓN BASE (Abstracción SOLID)
+# =====================================
+
 class ClinicaException(Exception):
     """
-    Excepción base para todas las excepciones del proyecto
-    Args: mensaje (str)
-    Return: Objeto excepción
+    Excepción base para todas las excepciones del proyecto.
     """
 
-# EXCEPCIONES DE ENTIDADES NO ENCONTRADAS
+    def __init__(self, mensaje: str):
+        self.mensaje = mensaje
+        super().__init__(self.mensaje)
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}: {self.mensaje}"
+
+
+# =====================================
+# EXCEPCIONES: ENTIDADES NO ENCONTRADAS
+# =====================================
+
 class ClienteNoEncontradoException(ClinicaException):
-    """
-    Se lanza cuando se intenta acceder a un cliente que no existe
-    Args: cliente_id (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, cliente_id: int):
+        super().__init__(f"Cliente con ID {cliente_id} no encontrado")
+
 
 class MascotaNoEncontradaException(ClinicaException):
-    """
-    Se lanza cuando se intenta acceder a una mascota que no existe
-    Args: mascota_id (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, mascota_id: int):
+        super().__init__(f"Mascota con ID {mascota_id} no encontrada")
+
 
 class VeterinarioNoEncontradoException(ClinicaException):
-    """
-    Se lanza cuando se intenta acceder a un veterinario que no existe
-    Args: veterinario_id (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, veterinario_id: int):
+        super().__init__(f"Veterinario con ID {veterinario_id} no encontrado")
+
 
 class CitaNoEncontradaException(ClinicaException):
-    """
-    Se lanza cuando se intenta acceder a una cita que no existe
-    Args: cita_id (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, cita_id: int):
+        super().__init__(f"Cita con ID {cita_id} no encontrada")
 
-# EXCEPCIONES DE VALIDACIÓN Y DUPLICADOS
+
+# =====================================
+# EXCEPCIONES: VALIDACIÓN Y DUPLICADOS
+# =====================================
+
 class DNIDuplicadoException(ClinicaException):
-    """
-    Se lanza cuando se intenta crear un cliente/veterinario con DNI duplicado
-    Args: dni (str), entidad (str, ej: "Cliente" o "Veterinario")
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, dni: str, entidad: str = "Cliente"):
+        super().__init__(f"Ya existe un {entidad} con DNI {dni}")
+
 
 class ClienteSinMascotasException(ClinicaException):
-    """
-    Se lanza cuando se intenta acceder a mascotas de un cliente que no tiene ninguna
-    Args: cliente_id (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, cliente_id: int):
+        super().__init__(f"Cliente {cliente_id} no tiene mascotas registradas")
+
 
 class ValidacionException(ClinicaException):
-    """
-    Se lanza cuando un campo no cumple con las validaciones requeridas
-    Args: campo (str), motivo (str), valor (str, opcional)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, campo: str, motivo: str, valor: str = None):
+        if valor:
+            mensaje = f"Validación en '{campo}': {motivo} (valor: {valor})"
+        else:
+            mensaje = f"Validación en '{campo}': {motivo}"
+        super().__init__(mensaje)
 
-# EXCEPCIONES DE BASE DE DATOS
+
+# =====================================
+# EXCEPCIONES: BASE DE DATOS
+# =====================================
+
 class DatabaseConnectionException(ClinicaException):
-    """
-    Se lanza cuando hay un problema al conectar con la base de datos
-    Args: mensaje (str)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, mensaje: str):
+        super().__init__(f"Error de conexión a la BD: {mensaje}")
+
 
 class DatabaseOperationException(ClinicaException):
-    """
-    Se lanza cuando una operación en la base de datos falla
-    Args: operacion (str), motivo (str)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, operacion: str, motivo: str):
+        super().__init__(f"Error en operación '{operacion}': {motivo}")
 
-# EXCEPCIONES DE LÓGICA
+
+# =====================================
+# EXCEPCIONES: LÓGICA DE NEGOCIO
+# =====================================
+
 class CitaConflictoException(ClinicaException):
-    """
-    Se lanza cuando hay conflicto de citas (misma hora, veterinario, etc)
-    Args: motivo (str)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, motivo: str):
+        super().__init__(f"Conflicto de citas: {motivo}")
+
 
 class VeterinarioSobreCargadoException(ClinicaException):
-    """
-    Se lanza cuando un veterinario tiene demasiadas citas programadas
-    Args: veterinario_id (int), num_citas (int)
-    Return: Mensaje de error descriptivo
-    """
+    def __init__(self, veterinario_id: int, num_citas: int):
+        super().__init__(
+            f"Veterinario {veterinario_id} tiene {num_citas} citas. Límite superado."
+        )
