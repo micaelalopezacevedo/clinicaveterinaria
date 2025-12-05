@@ -40,11 +40,23 @@ from src.mascotas import obtener_mascotas_por_cliente
 from src.utils import Utilidades
 from src.exceptions import ClienteNoEncontradoException, DNIDuplicadoException, ValidacionException
 
+# ✅ PROTECCIÓN DE LOGIN
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠ Debes iniciar sesión para acceder")
+    st.stop()
+
 # Configurar página
 st.set_page_config(page_title="Gestión de Clientes", page_icon="👤", layout="wide")
 
 st.title("👤 Gestión de Clientes")
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to top, rgb(194, 211, 255), rgb(255, 255, 255));
+</style>
+""", unsafe_allow_html=True)
 st.markdown("---")
+
 
 # ========================
 # CLASE 1: REGISTRAR CLIENTE
@@ -195,6 +207,7 @@ class BuscadorCliente:
     
     @staticmethod
     def _buscar_por_dni():
+        """Busca los clientes por DNI"""
         dni = st.text_input("Introduce el DNI", placeholder="Ej: 12345678A", key="buscar_dni_cliente")
         
         if st.button("🔍 Buscar", use_container_width=True, key="btn_buscar_dni_cliente"):
@@ -204,7 +217,7 @@ class BuscadorCliente:
             
             try:
                 if Utilidades.validar_dni(dni) == False:
-                     st.error(f"❌ Formato de DNI no válido (ejemplo de formaro: 12345678A): {dni}")
+                     st.error(f"❌ Formato de DNI no válido (ejemplo de formato: 12345678A): {dni}")
                 cliente = buscar_cliente_por_dni(dni)
                 if cliente:
                     st.success("✅ Encontrado")
@@ -216,7 +229,7 @@ class BuscadorCliente:
     
     @staticmethod
     def _buscar_por_nombre():
-        nombre = st.text_input("Introduce el nombre (o parte)", placeholder="Ej: Juan", key="buscar_nombre_cliente")
+        nombre = st.text_input("Introduce el nombre", placeholder="Ej: Juan", key="buscar_nombre_cliente")
         
         if st.button("🔍 Buscar", use_container_width=True, key="btn_buscar_nombre_cliente"):
             if not nombre:
@@ -292,6 +305,7 @@ class EditorCliente:
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
                 st.session_state.cliente_seleccionado = None
+
     
     @staticmethod
     def _mostrar_formulario_edicion():

@@ -18,11 +18,23 @@ from src.clientes import obtener_cliente_por_id
 from src.utils import Utilidades
 from src.exceptions import ValidacionException
 
+# ✅ PROTECCIÓN DE LOGIN
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠ Debes iniciar sesión para acceder")
+    st.stop()
+
 
 # ============= Configuración =============
 st.set_page_config(page_title="Gestión de Citas", page_icon="📅", layout="wide")
 st.title("📅 Gestión de Citas")
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to top, rgb(194, 211, 255), rgb(255, 255, 255));
+</style>
+""", unsafe_allow_html=True)
 st.markdown("---")
+
 
 
 # =========================================================

@@ -20,14 +20,17 @@ from src.analisis import (
     obtener_especie_mas_comun
 )
 
+# ✅ PROTECCIÓN DE LOGIN
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠ Debes iniciar sesión para acceder")
+    st.stop()
 
-st.set_page_config(
-    page_title="Análisis y Estadísticas",
-    page_icon="📊",
-    layout="wide"
-)
-
-
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to top, rgb(194, 211, 255), rgb(255, 255, 255));
+</style>
+""", unsafe_allow_html=True)
 # =========================
 # CLASES DE VISUALIZACIÓN (SOLID)
 # =========================
@@ -42,7 +45,7 @@ class AnalisisGeneral:
             
             col1.metric("👥 Clientes", stats.get('total_clientes', 0))
             col2.metric("🐾 Mascotas", stats.get('total_mascotas', 0))
-            col3.metric("👨‍⚕️ Veterinarios", stats.get('total_veterinarios', 0))
+            col3.metric("👨‍⚕ Veterinarios", stats.get('total_veterinarios', 0))
             col4.metric("📅 Citas", stats.get('total_citas', 0))
             col5.metric("⏳ Pendientes", stats.get('citas_pendientes', 0))
         except Exception as e:
@@ -63,7 +66,7 @@ class AnalisisCargaVeterinaria:
             df = pd.DataFrame(carga)
             df = df.rename(columns={'nombre': 'Veterinario', 'num_citas': 'Nº de citas'})
             
-            st.subheader("👩‍⚕️ Carga de trabajo de los veterinarios")
+            st.subheader("👩‍⚕ Carga de trabajo de los veterinarios")
             st.dataframe(df[["Veterinario", "Nº de citas"]], use_container_width=True)
             
             # Gráfico interactivo de barras
@@ -175,7 +178,7 @@ class AnalisisVeterinarioTop:
                 return
             
             st.success(
-                f"⭐ Veterinario más solicitado: **{top['nombre']}** con **{top['num_citas']} cita(s)**"
+                f"⭐ Veterinario más solicitado: *{top['nombre']}* con *{top['num_citas']} cita(s)*"
             )
         
         except Exception as e:
@@ -190,7 +193,7 @@ class AnalisisEspecieTop:
             especie = obtener_especie_mas_comun()
             
             if especie:
-                st.success(f"🏆 Especie de mascota más común: **{especie}**")
+                st.success(f"🏆 Especie de mascota más común: *{especie}*")
             else:
                 st.info("No hay datos de especies para mostrar.")
         

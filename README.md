@@ -121,3 +121,4 @@ Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió
 - Octava reunión (26/11/25): Implementación de la página de análisis. Actualización del fichero utils y revisión del cumplimiento de los principios SOLID en todas las páginas. Incorporación de la librería plotly para la visualización de los gráficos interactivos en Streamlit.
 - Novena reunión (3/12/25): Actualizar páginas pendientes para seguir los principios SOLID. Arreglar bugs y errores de Streamlit para un mejor funcionamiento de la app.
 - Décima reunión (04/12/2025): Mejora de app.py y revisión de exceptions.py y logger.py. También hemos añadido algún test que nos faltaba.
+- Undécima reunión (05/12/2025): Implementación del sistema de login en Streamlit con autenticación de usuarios usando la librería bcrypt y gestión de sesión mediante st.session_state. Incluido protección de todas las páginas para que solo sean accesibles tras iniciar sesión correctamente.

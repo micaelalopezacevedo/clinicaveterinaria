@@ -15,10 +15,22 @@ from src.clientes import buscar_cliente_por_dni, obtener_cliente_por_id
 from src.utils import Utilidades
 from src.exceptions import MascotaNoEncontradaException, ClienteNoEncontradoException, ValidacionException
 
+# ✅ PROTECCIÓN DE LOGIN
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠ Debes iniciar sesión para acceder")
+    st.stop()
+
+
 # Configurar página
 st.set_page_config(page_title="Gestión de Mascotas", page_icon="🐶", layout="wide")
 
 st.title("🐶 Gestión de Mascotas")
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to top, rgb(194, 211, 255), rgb(255, 255, 255));
+</style>
+""", unsafe_allow_html=True)
 st.markdown("---")
 
 # ========================

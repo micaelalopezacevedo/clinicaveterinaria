@@ -39,10 +39,22 @@ from src.veterinarios import (
 from src.utils import Utilidades
 from src.exceptions import DNIDuplicadoException, ValidacionException, VeterinarioNoEncontradoException
 
+# ✅ PROTECCIÓN DE LOGIN
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠ Debes iniciar sesión para acceder")
+    st.stop()
+
+
 # Configurar página
 st.set_page_config(page_title="Gestión de Veterinarios", page_icon="🩺", layout="wide")
 
 st.title("🩺 Gestión de Veterinarios")
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to top, rgb(194, 211, 255), rgb(255, 255, 255));
+</style>
+""", unsafe_allow_html=True)
 st.markdown("---")
 
 # ========================
