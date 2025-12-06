@@ -72,7 +72,7 @@ class RegistrarCita:
         if not mascotas:
             st.warning("No hay mascotas registradas")
             return None
-        opciones = {f"{m.nombre} (ID {m.id})": m.id for m in mascotas}
+        opciones = {f"{m.nombre} (Propietario: {obtener_cliente_por_id(m.cliente_id).nombre} ({obtener_cliente_por_id(m.cliente_id).dni}))": m.id for m in mascotas}
         return opciones[st.selectbox("Mascota *", list(opciones.keys()))]
 
     @staticmethod
@@ -185,13 +185,15 @@ class BuscadorCita:
     def _mostrar(cita):
         mascota = obtener_mascota_por_id(cita.mascota_id)
         vet = obtener_veterinario_por_id(cita.veterinario_id)
-
-        st.write(f"### Cita {cita.id}")
-        st.write(f"Fecha: {Utilidades.formatear_fecha(cita.fecha)}")
-        st.write(f"Hora: {cita.hora}")
-        st.write(f"Estado: {cita.estado}")
-        st.write(f"Mascota: {mascota.nombre if mascota else 'N/A'}")
-        st.write(f"Veterinario: {vet.nombre if vet else 'N/A'}")
+    
+        with st.expander(f"Cita {cita.id} - {Utilidades.formatear_fecha(cita.fecha)}"):
+            st.write(f"### Cita {cita.id}")
+            st.write(f"Fecha: {Utilidades.formatear_fecha(cita.fecha)}")
+            st.write(f"Hora: {cita.hora}")
+            st.write(f"Estado: {cita.estado}")
+            st.write(f"Mascota: {mascota.nombre if mascota else 'N/A'}")
+            st.write(f"Veterinario: {vet.nombre if vet else 'N/A'}")
+            st.write(f"Motivo: {cita.motivo if cita.motivo else 'N/A'}")
 
     @staticmethod
     def _por_id():
@@ -264,7 +266,7 @@ class EditorCita:
     def mostrar():
         st.header("Editar o cancelar cita")
 
-        tipo = st.selectbox("Buscar por:", ["ID", "Veterinario", "Mascota"])
+        tipo = st.selectbox("Buscar por:", ["ID", "Veterinario", "Fecha"])
 
         if tipo == "ID":
             EditorCita._buscar_id()
@@ -272,8 +274,8 @@ class EditorCita:
         elif tipo == "Veterinario":
             EditorCita._buscar_vet()
 
-        else:
-            EditorCita._buscar_masc()
+        elif tipo == "Fecha":
+            EditorCita._buscar_fecha()
 
         EditorCita._formulario()
 
@@ -311,6 +313,18 @@ class EditorCita:
             st.session_state.citas_lista = obtener_citas_por_mascota(masc_id)
 
         EditorCita._lista()
+    
+    @staticmethod
+    def _buscar_fecha():
+        fecha = st.date_input("Fecha")
+        if st.button("Buscar fecha"):
+            st.session_state.citas_lista = obtener_citas_por_fecha(fecha)
+        if st.session_state.citas_lista:
+            EditorCita._lista()
+        else: 
+            st.info("No hay citas programadas para esta fecha")
+
+        
 
     @staticmethod
     def _lista():

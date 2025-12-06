@@ -19,6 +19,8 @@ from src.analisis import (
     obtener_veterinario_con_mas_citas,
     obtener_especie_mas_comun
 )
+import time
+
 
 # ✅ PROTECCIÓN DE LOGIN
 if not st.session_state.get("logged_in", False):
@@ -101,23 +103,34 @@ class AnalisisByEspecie:
             if not especiedict:
                 st.info("No hay mascotas registradas.")
                 return
-            
-            labels, values = zip(*especiedict.items())
-            
+                        
             st.subheader("🐶 Mascotas registradas por especie")
-            df = pd.DataFrame({"Especie": labels, "Cantidad": values})
+            print(">>> especiedict=", especiedict)
+            df = pd.DataFrame([
+    {"Especie": k, "Cantidad": v}
+    for k, v in especiedict.items()
+])
+
+            df["Cantidad"] = pd.to_numeric(df["Cantidad"], errors="coerce")
+
             st.dataframe(df, use_container_width=True)
-            
-            # Gráfico interactivo de pastel
+
+            # DataFrame limpio (solo para el pie)
+            df_pie = pd.DataFrame([
+                {"Especie": str(k), "Cantidad": float(v)}
+                for k, v in especiedict.items()
+            ])
+
+            # Pie chart
             fig = px.pie(
-                df, 
-                names="Especie", 
-                values="Cantidad", 
+                df_pie,
+                names="Especie",
+                values="Cantidad",
                 title="Proporción de mascotas por especie",
                 color_discrete_sequence=px.colors.sequential.Tealgrn,
-                hole=0  # Cambiar a 0.4 para gráfico de dona
             )
-            fig.update_layout(hovermode="closest")
+
+            fig.update_traces(textinfo='percent+label')
             st.plotly_chart(fig, use_container_width=True)
         
         except Exception as e:

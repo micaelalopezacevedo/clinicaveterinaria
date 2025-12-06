@@ -392,3 +392,121 @@ src.exceptions.MascotaNoEncontradaException: MascotaNoEncontradaException: Masco
 2025-12-05 21:31:35 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
 2025-12-05 21:31:46 - clinica_veterinaria - INFO - Logger configurado correctamente
 2025-12-05 21:31:47 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 19:25:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:27 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:35 - clinica_veterinaria - WARNING - ⚠ Intento fallido con usuario: admin
+2025-12-06 19:28:39 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:39 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:42 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:28:42 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:28:45 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 19:36:18 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:36:19 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:36:28 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:36:31 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:36:31 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:36:34 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:36:34 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:18 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:22 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:25 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:25 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:28 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:37:28 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:37:58 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 3
+2025-12-06 19:39:24 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 4
+2025-12-06 19:40:22 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:40:26 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:40:29 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:40:29 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:40:32 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:42:30 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:35 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:38 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:38 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:41 - clinica_veterinaria - WARNING - ⚠ Intento fallido con usuario: admin
+2025-12-06 19:42:43 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:43 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:46 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:42:46 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:42:48 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 19:43:08 - clinica_veterinaria - INFO - ✅ Cita creada con ID: 3
+2025-12-06 19:45:02 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:45:06 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:45:10 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:45:10 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:45:13 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:45:13 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:45:16 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 19:46:46 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:46:51 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:46:57 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:46:57 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:47:00 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:47:00 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:47:02 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 19:53:44 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:53:49 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:53:53 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:53:53 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:53:56 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:53:56 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:11 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:15 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:17 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:18 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:20 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 19:55:21 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 19:55:23 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:05:18 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:05:26 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:05:29 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:05:29 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:05:32 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:05:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:09:54 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:10:03 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:10:06 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:10:06 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:10:08 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:10:09 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:19 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:32 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:36 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:37 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:40 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:13:40 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:13:42 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:17:36 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:41 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:43 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:43 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:46 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:17:46 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:47 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:17:49 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:21:53 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:22:31 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:22:33 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:22:40 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:22:43 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:22:43 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:22:45 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:24:13 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:24:26 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:24:28 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:24:28 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:24:30 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-06 20:24:30 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:24:33 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:28:32 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 5
+2025-12-06 20:28:43 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 6
+2025-12-06 20:29:19 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 7
+2025-12-06 20:29:30 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:29:32 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:29:34 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-06 20:29:35 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-06 20:30:14 - clinica_veterinaria - INFO - ✅ Mascota creada con ID: 8

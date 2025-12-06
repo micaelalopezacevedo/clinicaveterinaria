@@ -133,6 +133,7 @@ def obtener_mascotas_por_especie():
     try:
         mascotas = session.query(Mascota).all()
         conteo = Counter([m.especie for m in mascotas if m.especie])
+        print(dict(conteo)) # Funciona: {'Perro': 3, 'Pájaro': 1}
         return dict(conteo)
     except Exception as e:
         print(f"Error en obtener_mascotas_por_especie: {str(e)}")
