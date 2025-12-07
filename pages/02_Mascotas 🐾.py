@@ -154,32 +154,42 @@ class ListarMascotas:
     def _mostrar_mascotas(mascotas):
         """Renderiza cada mascota en un expander"""
         for mascota in mascotas:
-            try:
-                titulo = f"🐾 {mascota.nombre} - {mascota.especie}"
+                titulo = f"{Utilidades.computarEmoticonoEspecie(mascota.especie)} {mascota.nombre} - {mascota.especie}"
                 
                 with st.expander(titulo):
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.write(f"ID: {mascota.id}")
-                        st.write(f"Nombre: {mascota.nombre}")
-                        st.write(f"Especie: {mascota.especie}")
-                        st.write(f"Raza: {mascota.raza or 'No registrada'}")
-                    
-                    with col2:
-                        st.write(f"Edad: {mascota.edad or 'N/A'} años")
-                        st.write(f"Peso: {mascota.peso or 'N/A'} kg")
-                        st.write(f"Sexo: {mascota.sexo or 'No registrado'}")
-                    
-                    try:
-                        cliente = obtener_cliente_por_id(mascota.cliente_id)
-                        if cliente:
-                            st.write(f"Propietario: {cliente.nombre} ({cliente.dni})")
-                    except:
-                        pass
-            
-            except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+                    tab1, tab2 = st.tabs(["Ficha de mascota", "Historial de citas"])
+                    with tab1:
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown(f"**ID:** {mascota.id}")
+                            st.markdown(f"**Nombre:** {mascota.nombre}")
+                            st.markdown(f"**Especie:** {mascota.especie}")
+                            st.markdown(f"**Raza:** {mascota.raza or 'No registrada'}")
+
+                        with col2:
+                            st.markdown(f"**Edad:** {mascota.edad or 'N/A'} años")
+                            st.markdown(f"**Peso:** {mascota.peso or 'N/A'} kg")
+                            st.markdown(f"**Sexo:** {mascota.sexo or 'No registrado'}")
+                        
+                        try:
+                            cliente = obtener_cliente_por_id(mascota.cliente_id)
+                            if cliente:
+                                st.markdown(f"**Propietario:** {cliente.nombre} ({cliente.dni})")
+                        except:
+                            pass
+                    with tab2:
+                        citas = ver_historial_mascota(mascota.id)
+                        if citas:
+                            for cita in citas:
+                                st.markdown(f"**Fecha y hora**: el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**")
+                                st.markdown(f"**Motivo:** {cita.motivo}")
+                                st.markdown(f"**Con:** {cita.veterinario.nombre} ({cita.veterinario.especialidad})")
+                                st.markdown(f"**Estado:** {cita.estado}")
+                                st.divider()
+                        else: st.info("No hay historial de citas para esta mascota")
+
+
 
 
 # ========================
@@ -240,7 +250,7 @@ class BuscadorMascota:
                 if mascotas:
                     st.success(f"✅ {len(mascotas)} mascota(s) del cliente {cliente.nombre}")
                     for m in mascotas:
-                        with st.expander(f"🐾 {m.nombre} - {m.especie}"):
+                        with st.expander(f"{Utilidades.computarEmoticonoEspecie(m.especie)} {m.nombre} - {m.especie}"):
                             BuscadorMascota._mostrar_detalle(m)
                 else:
                     st.info(f"ℹ {cliente.nombre} no tiene mascotas")
@@ -257,7 +267,7 @@ class BuscadorMascota:
                 if mascotas:
                     st.success(f"✅ {len(mascotas)} mascota(s) encontrada(s)")
                     for m in mascotas:
-                        with st.expander(f"🐾 {m.nombre}"):
+                        with st.expander(f"{Utilidades.computarEmoticonoEspecie(m.especie)} {m.nombre}"):
                             BuscadorMascota._mostrar_detalle(m)
                 else:
                     st.info(f"ℹ Sin mascotas de especie: {especie}")
@@ -266,23 +276,37 @@ class BuscadorMascota:
     
     @staticmethod
     def _mostrar_detalle(mascota):
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write(f"ID: {mascota.id}")
-            st.write(f"Nombre: {mascota.nombre}")
-            st.write(f"Especie: {mascota.especie}")
-            st.write(f"Raza: {mascota.raza or 'N/A'}")
-        with col2:
-            st.write(f"Edad: {mascota.edad or 'N/A'} años")
-            st.write(f"Peso: {mascota.peso or 'N/A'} kg")
-            st.write(f"Sexo: {mascota.sexo or 'N/A'}")
-        
-        try:
-            cliente = obtener_cliente_por_id(mascota.cliente_id)
-            if cliente:
-                st.write(f"Propietario: {cliente.nombre} ({cliente.dni})")
-        except:
-            pass
+        tab1, tab2 = st.tabs(["Ficha de mascota", "Historial de citas"])
+        with tab1:
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown(f"**ID:** {mascota.id}")
+                st.markdown(f"**Nombre:** {mascota.nombre}")
+                st.markdown(f"**Especie:** {mascota.especie}")
+                st.markdown(f"**Raza:** {mascota.raza or 'No registrada'}")
+
+            with col2:
+                st.markdown(f"**Edad:** {mascota.edad or 'N/A'} años")
+                st.markdown(f"**Peso:** {mascota.peso or 'N/A'} kg")
+                st.markdown(f"**Sexo:** {mascota.sexo or 'No registrado'}")
+            
+            try:
+                cliente = obtener_cliente_por_id(mascota.cliente_id)
+                if cliente:
+                    st.markdown(f"**Propietario:** {cliente.nombre} ({cliente.dni})")
+            except:
+                pass
+        with tab2:
+            citas = ver_historial_mascota(mascota.id)
+            if citas:
+                for cita in citas:
+                    st.markdown(f"**Fecha y hora**: el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**")
+                    st.markdown(f"**Motivo:** {cita.motivo}")
+                    st.markdown(f"**Con:** {cita.veterinario.nombre} ({cita.veterinario.especialidad})")
+                    st.markdown(f"**Estado:** {cita.estado}")
+                    st.divider()
+            else: st.info("No hay historial de citas para esta mascota")
 
 
 # ========================

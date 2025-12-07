@@ -155,31 +155,45 @@ class ListarClientes:
     def _mostrar_clientes(clientes):
         """Renderiza cada cliente en un expander"""
         for cliente in clientes:
-            try:
                 titulo = f"👤 {cliente.nombre} - DNI: {cliente.dni}"
                 
                 with st.expander(titulo):
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.write(f"*ID:* {cliente.id}")
-                        st.write(f"*Nombre:* {cliente.nombre}")
-                        st.write(f"*DNI:* {cliente.dni}")
-                    
-                    with col2:
-                        st.write(f"*Teléfono:* {cliente.telefono or 'No registrado'}")
-                        st.write(f"*Email:* {cliente.email or 'No registrado'}")
-                    
-                    mascotas = obtener_mascotas_por_cliente(cliente.id)
-                    if mascotas:
-                        st.markdown("🐾 Mascotas:")
-                        for mascota in mascotas:
-                            st.write(f"- {mascota.nombre} ({mascota.especie})")
-                    else:
-                        st.info("Sin mascotas registradas")
-            
-            except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+                    tab1, tab2 = st.tabs(["Ficha del cliente", "Mascotas"])
+                    with tab1:
+                        col1, col2, col3 = st.columns([.25, 1, 1])
+                        with col1:
+                            st.image("./img/icono_cliente.png")
+                        with col2:
+                            st.markdown(f"**ID:** {cliente.id}")
+                            st.markdown(f"**Nombre:** {cliente.nombre}")
+                            st.markdown(f"**DNI:** {cliente.dni}")
+                        with col3:
+                            st.markdown(f"**Teléfono:** {cliente.telefono or 'N/A'}")
+                            st.markdown(f"**Email:** {cliente.email or 'N/A'}")
+
+                    with tab2: 
+                        mascotas = obtener_mascotas_por_cliente(cliente.id)
+                        if mascotas:
+                            with st.container():
+                                st.markdown("### Mascotas")
+                                for mascota in mascotas:
+                                    emoticono = Utilidades.computarEmoticonoEspecie(mascota.especie)
+                                    st.subheader(f"{emoticono} {mascota.nombre}")
+                                    col1, col2 = st.columns(2)
+                                
+                                    with col1:
+                                        st.markdown(f"**ID:** {mascota.id}")
+                                        st.markdown(f"**Nombre:** {mascota.nombre}")
+                                        st.markdown(f"**Especie:** {mascota.especie}")
+                                        st.markdown(f"**Raza:** {mascota.raza or 'No registrada'}")
+
+                                    with col2:
+                                        st.markdown(f"**Edad:** {mascota.edad or 'N/A'} años")
+                                        st.markdown(f"**Peso:** {mascota.peso or 'N/A'} kg")
+                                        st.markdown(f"**Sexo:** {mascota.sexo or 'No registrado'}")
+                                    st.divider()
+                        else:
+                            st.info("El cliente no tiene mascotas registradas en este momento")
 
 
 # ========================
@@ -250,21 +264,43 @@ class BuscadorCliente:
     
     @staticmethod
     def _mostrar_detalle(cliente):
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write(f"*ID:* {cliente.id}")
-            st.write(f"*Nombre:* {cliente.nombre}")
-            st.write(f"*DNI:* {cliente.dni}")
-        with col2:
-            st.write(f"*Teléfono:* {cliente.telefono or 'N/A'}")
-            st.write(f"*Email:* {cliente.email or 'N/A'}")
-        
-        mascotas = obtener_mascotas_por_cliente(cliente.id)
-        if mascotas:
-            st.markdown("🐾 Mascotas:")
-            for mascota in mascotas:
-                st.write(f"- {mascota.nombre} ({mascota.especie})")
+        tab1, tab2 = st.tabs(["Ficha del cliente", "Mascotas"])
+        with tab1:
+            col1, col2, col3 = st.columns([.25, 1, 1])
+            with col1:
+                st.image("./img/icono_cliente.png")
+            with col2:
+                st.markdown(f"**ID:** {cliente.id}")
+                st.markdown(f"**Nombre:** {cliente.nombre}")
+                st.markdown(f"**DNI:** {cliente.dni}")
+            with col3:
+                st.markdown(f"**Teléfono:** {cliente.telefono or 'N/A'}")
+                st.markdown(f"**Email:** {cliente.email or 'N/A'}")
 
+        with tab2: 
+            mascotas = obtener_mascotas_por_cliente(cliente.id)
+            if mascotas:
+                with st.container():
+                    st.markdown("### Mascotas")
+                    for mascota in mascotas:
+                        emoticono = Utilidades.computarEmoticonoEspecie(mascota.especie)
+                        st.subheader(f"{emoticono} {mascota.nombre}")
+                        col1, col2 = st.columns(2)
+                    
+                        with col1:
+                            st.markdown(f"**ID:** {mascota.id}")
+                            st.markdown(f"**Nombre:** {mascota.nombre}")
+                            st.markdown(f"**Especie:** {mascota.especie}")
+                            st.markdown(f"**Raza:** {mascota.raza or 'No registrada'}")
+
+                        with col2:
+                            st.markdown(f"**Edad:** {mascota.edad or 'N/A'} años")
+                            st.markdown(f"**Peso:** {mascota.peso or 'N/A'} kg")
+                            st.markdown(f"**Sexo:** {mascota.sexo or 'No registrado'}")
+                        st.divider()
+            else:
+                st.info("El cliente no tiene mascotas registradas en este momento")
+                    
 
 # ========================
 # CLASE 4: EDITOR CLIENTE (ARREGLADO)

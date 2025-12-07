@@ -291,6 +291,15 @@ class Utilidades:
         return round(meses / 12, 1)
     
     @staticmethod
+    def computarEmoticonoEspecie(especie):
+        return("🐶" if especie == "Perro" 
+                                 else "🐱" if especie == "Gato" 
+                                 else "🐦" if especie == "Pájaro"
+                                 else "🐇" if especie == "Conejo"
+                                 else "🐾")
+
+    
+    @staticmethod
     def obtener_edad_desde_fecha(fecha_nacimiento: str) -> int:
         """
         Calcula edad a partir de fecha de nacimiento

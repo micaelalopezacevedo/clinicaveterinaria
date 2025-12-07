@@ -36,6 +36,10 @@ from src.veterinarios import (
     modificar_veterinario, eliminar_veterinario, veterinario_existe,
     obtener_veterinarios_por_especialidad
 )
+from src.clientes import obtener_cliente_por_id
+
+from src.citas import obtener_citas_por_veterinario
+
 from src.utils import Utilidades
 from src.exceptions import DNIDuplicadoException, ValidacionException, VeterinarioNoEncontradoException
 
@@ -185,25 +189,45 @@ class ListarVeterinarios:
     def _mostrar_veterinarios(veterinarios):
         """Renderiza cada veterinario en un expander"""
         for veterinario in veterinarios:
-            try:
-                titulo = f"🔹 {veterinario.nombre} - DNI: {veterinario.dni}"
-                
-                with st.expander(titulo):
+            with st.expander(f"🔹 {veterinario.nombre} - {veterinario.especialidad}"):
+                tab1, tab2 = st.tabs(["Ficha del veterinario", "Citas"])
+                with tab1: 
                     col1, col2 = st.columns(2)
-                    
                     with col1:
-                        st.write(f"*ID:* {veterinario.id}")
-                        st.write(f"*Nombre:* {veterinario.nombre}")
-                        st.write(f"*DNI:* {veterinario.dni}")
-                        st.write(f"*Cargo:* {veterinario.cargo or 'No registrado'}")
-                    
+                        st.markdown(f"**ID:** {veterinario.id}")
+                        st.markdown(f"**Nombre:** {veterinario.nombre}")
+                        st.markdown(f"**DNI:** {veterinario.dni}")
+                        st.markdown(f"**Cargo:** {veterinario.cargo or 'N/A'}")
+
                     with col2:
-                        st.write(f"*Especialidad:* {veterinario.especialidad or 'No registrada'}")
-                        st.write(f"*Teléfono:* {veterinario.telefono or 'No registrado'}")
-                        st.write(f"*Email:* {veterinario.email or 'No registrado'}")
-            
-            except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+                        st.markdown(f"**Especialidad:** {veterinario.especialidad or 'N/A'}")
+                        st.markdown(f"**Teléfono:** {veterinario.telefono or 'N/A'}")
+                        st.markdown(f"**Email:** {veterinario.email or 'N/A'}")
+                with tab2:
+                    citas = obtener_citas_por_veterinario(veterinario.id)
+                    if citas:
+                        for cita in citas:
+                            st.subheader(f"{Utilidades.computarEmoticonoEspecie(cita.mascota.especie)} {Utilidades.formatear_fecha(cita.fecha)} - {cita.estado}")
+                        
+                            tab1, tab2 = st.tabs(["Información de la mascota", "Información de la cita"])
+                            with tab1:
+                                col1, col2 = st.columns(2)
+                                with col1:
+                                    st.markdown(f"**ID:** {cita.mascota.id}")
+                                    st.markdown(f"**Nombre:** {cita.mascota.nombre}")
+                                    st.markdown(f"**Especie:** {cita.mascota.especie}")
+                                    st.markdown(f"**Raza:** {cita.mascota.raza or 'No registrada'}")
+
+                                with col2:
+                                    st.markdown(f"**Edad:** {cita.mascota.edad or 'N/A'} años")
+                                    st.markdown(f"**Peso:** {cita.mascota.peso or 'N/A'} kg")
+                                    st.markdown(f"**Sexo:** {cita.mascota.sexo or 'No registrado'}")
+                            with tab2:
+                                st.markdown(f"**Fecha y hora**: el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**")
+                                st.markdown(f"**Motivo:** {cita.motivo}")
+                            st.divider()
+                    else:
+                        st.info("No hay citas registradas en este momento para este veterinario")
 
 
 # ========================
@@ -243,7 +267,8 @@ class BuscadorVeterinario:
                 veterinario = buscar_veterinario_por_dni(dni)
                 if veterinario:
                     st.success("✅ Encontrado")
-                    BuscadorVeterinario._mostrar_detalle(veterinario)
+                    with st.expander(f"🔹 {veterinario.nombre} - DNI: {veterinario.dni}"):
+                        BuscadorVeterinario._mostrar_detalle(veterinario)
                 else:
                     st.error(f"❌ No encontrado: {dni}")
             except Exception as e:
@@ -291,16 +316,44 @@ class BuscadorVeterinario:
     
     @staticmethod
     def _mostrar_detalle(veterinario):
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write(f"*ID:* {veterinario.id}")
-            st.write(f"*Nombre:* {veterinario.nombre}")
-            st.write(f"*DNI:* {veterinario.dni}")
-            st.write(f"*Cargo:* {veterinario.cargo or 'N/A'}")
-        with col2:
-            st.write(f"*Especialidad:* {veterinario.especialidad or 'N/A'}")
-            st.write(f"*Teléfono:* {veterinario.telefono or 'N/A'}")
-            st.write(f"*Email:* {veterinario.email or 'N/A'}")
+        tab1, tab2 = st.tabs(["Ficha del veterinario", "Citas"])
+        with tab1: 
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"**ID:** {veterinario.id}")
+                st.markdown(f"**Nombre:** {veterinario.nombre}")
+                st.markdown(f"**DNI:** {veterinario.dni}")
+                st.markdown(f"**Cargo:** {veterinario.cargo or 'N/A'}")
+
+            with col2:
+                st.markdown(f"**Especialidad:** {veterinario.especialidad or 'N/A'}")
+                st.markdown(f"**Teléfono:** {veterinario.telefono or 'N/A'}")
+                st.markdown(f"**Email:** {veterinario.email or 'N/A'}")
+        with tab2:
+            citas = obtener_citas_por_veterinario(veterinario.id)
+            if citas:
+                for cita in citas:
+                    st.subheader(f"{Utilidades.computarEmoticonoEspecie(cita.mascota.especie)} {Utilidades.formatear_fecha(cita.fecha)} - {cita.estado}")
+                   
+                    tab1, tab2 = st.tabs(["Información de la mascota", "Información de la cita"])
+                    with tab1:
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.markdown(f"**ID:** {cita.mascota.id}")
+                            st.markdown(f"**Nombre:** {cita.mascota.nombre}")
+                            st.markdown(f"**Especie:** {cita.mascota.especie}")
+                            st.markdown(f"**Raza:** {cita.mascota.raza or 'No registrada'}")
+
+                        with col2:
+                            st.markdown(f"**Edad:** {cita.mascota.edad or 'N/A'} años")
+                            st.markdown(f"**Peso:** {cita.mascota.peso or 'N/A'} kg")
+                            st.markdown(f"**Sexo:** {cita.mascota.sexo or 'No registrado'}")
+                    with tab2:
+                        st.markdown(f"**Fecha y hora**: el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**")
+                        st.markdown(f"**Motivo:** {cita.motivo}")
+                    st.divider()
+
+
 
 
 # ========================
