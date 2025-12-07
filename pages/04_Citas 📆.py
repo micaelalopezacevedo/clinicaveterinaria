@@ -134,25 +134,21 @@ class ListarCitas:
         cliente = obtener_cliente_por_id(mascota.cliente_id) if mascota else None
 
         icono = Utilidades.obtener_icono_estado_cita(cita.estado)
-        titulo = f"{icono} Cita {cita.id} — {Utilidades.formatear_fecha(cita.fecha)} {cita.hora}"
 
-        with st.expander(titulo):
+        with st.expander(f"🔹{Utilidades.obtener_icono_estado_cita(cita.estado)} **Cita {cita.id}** - Para **{cita.veterinario.nombre}** el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**"):
+            st.subheader(f"Cita {cita.id}")
             col1, col2 = st.columns(2)
-
             with col1:
-                st.write(f"Estado: **{cita.estado}**")
-                st.write(f"Fecha: {Utilidades.formatear_fecha(cita.fecha)}")
-                st.write(f"Hora: {cita.hora}")
-                st.write(f"Mascota: {mascota.nombre if mascota else 'N/A'}")
-                if cliente:
-                    st.write(f"Cliente: {cliente.nombre}")
-
+                st.markdown(f"**Fecha:** {Utilidades.formatear_fecha(cita.fecha)}")
+                st.markdown(f"**Hora:** {cita.hora}")
             with col2:
-                st.write(f"Veterinario: {vet.nombre if vet else 'N/A'}")
-                if cita.motivo:
-                    st.write(f"Motivo: {cita.motivo}")
-                if cita.diagnostico:
-                    st.write(f"Diagnóstico: {cita.diagnostico}")
+                st.markdown(f"**Estado:** {Utilidades.obtener_icono_estado_cita(cita.estado)} {cita.estado}")
+                st.markdown(f"**Mascota:** {Utilidades.computarEmoticonoEspecie(mascota.especie) + mascota.nombre + ' ' + obtener_cliente_por_id(mascota.cliente_id).nombre + ' (' + obtener_cliente_por_id(mascota.cliente_id).dni + ')' if mascota else 'N/A'}")
+                st.markdown(f"**Veterinario:** {vet.nombre + ' (' + vet.especialidad + ')' if vet else 'N/A'}")
+            
+            st.divider()
+            st.markdown(f"**Motivo/Notas:** {cita.motivo if cita.motivo else 'N/A'}")
+
 
 
 # =========================================================
@@ -164,7 +160,7 @@ class BuscadorCita:
         st.header("Buscar citas")
 
         tipo = st.selectbox("Buscar por:",
-                            ["ID Cita", "Fecha", "Mascota", "Veterinario", "Estado"])
+                            ["ID Cita", "Fecha", "Mascota", "Veterinario", "Estado"], key=("1"))
 
         if tipo == "ID Cita":
             BuscadorCita._por_id()
@@ -186,14 +182,19 @@ class BuscadorCita:
         mascota = obtener_mascota_por_id(cita.mascota_id)
         vet = obtener_veterinario_por_id(cita.veterinario_id)
     
-        with st.expander(f"Cita {cita.id} - {Utilidades.formatear_fecha(cita.fecha)}"):
-            st.write(f"### Cita {cita.id}")
-            st.write(f"Fecha: {Utilidades.formatear_fecha(cita.fecha)}")
-            st.write(f"Hora: {cita.hora}")
-            st.write(f"Estado: {cita.estado}")
-            st.write(f"Mascota: {mascota.nombre if mascota else 'N/A'}")
-            st.write(f"Veterinario: {vet.nombre if vet else 'N/A'}")
-            st.write(f"Motivo: {cita.motivo if cita.motivo else 'N/A'}")
+        with st.expander(f"🔹{Utilidades.obtener_icono_estado_cita(cita.estado)} **Cita {cita.id}** - Para **{cita.veterinario.nombre}** el **{Utilidades.formatear_fecha(cita.fecha)}** a las **{cita.hora}**"):
+            st.subheader(f"Cita {cita.id}")
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"**Fecha:** {Utilidades.formatear_fecha(cita.fecha)}")
+                st.markdown(f"**Hora:** {cita.hora}")
+            with col2:
+                st.markdown(f"**Estado:** {Utilidades.obtener_icono_estado_cita(cita.estado)} {cita.estado}")
+                st.markdown(f"**Mascota:** {Utilidades.computarEmoticonoEspecie(mascota.especie) + mascota.nombre + ' ' + obtener_cliente_por_id(mascota.cliente_id).nombre + ' (' + obtener_cliente_por_id(mascota.cliente_id).dni + ')' if mascota else 'N/A'}")
+                st.markdown(f"**Veterinario:** {vet.nombre + ' (' + vet.especialidad + ')' if vet else 'N/A'}")
+            
+            st.divider()
+            st.markdown(f"**Motivo/Notas:** {cita.motivo if cita.motivo else 'N/A'}")
 
     @staticmethod
     def _por_id():
@@ -234,7 +235,7 @@ class BuscadorCita:
     def _por_vet():
         vets = listar_veterinarios()
         opciones = {v.nombre: v.id for v in vets}
-        vet_id = opciones[st.selectbox("Veterinario", list(opciones.keys()))]
+        vet_id = opciones[st.selectbox("Veterinario", list(opciones.keys()),key=("2"))]
 
         if st.button("Buscar veterinario"):
             citas = obtener_citas_por_veterinario(vet_id)

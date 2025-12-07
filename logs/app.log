@@ -558,3 +558,11 @@ src.exceptions.MascotaNoEncontradaException: MascotaNoEncontradaException: Masco
 2025-12-07 01:07:29 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
 2025-12-07 01:21:28 - clinica_veterinaria - INFO - Logger configurado correctamente
 2025-12-07 01:21:29 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-07 13:10:07 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-07 13:10:15 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-07 13:10:16 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-07 13:10:18 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-07 13:10:21 - clinica_veterinaria - INFO - ✅ Login exitoso: admin
+2025-12-07 13:10:21 - clinica_veterinaria - INFO - Logger configurado correctamente
+2025-12-07 13:10:23 - clinica_veterinaria - INFO - ✅ Página principal cargada correctamente. Usuario: Administrador
+2025-12-07 13:30:24 - clinica_veterinaria - INFO - ✅ Cita 3 actualizada
