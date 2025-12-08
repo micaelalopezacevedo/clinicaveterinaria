@@ -30,7 +30,7 @@ class TestColumnas:
         # Obtenemos los nombres de las columnas del modelo
         columns = {c.key for c in inspector.columns}
         for col in expected_columns:
-            assert col in columns, f"Falta la columna '{col}' en el modelo {model._name_}"
+            assert col in columns, f"Falta la columna '{col}' en el modelo {model.__name__}"
 
     def test_cliente_tiene_columnas_requeridas(self):
         self._check_columns(Cliente, ["id", "nombre", "dni", "telefono", "email"])
@@ -110,17 +110,24 @@ class TestRelaciones:
         """
         Test IMPORTANTE: Verificar que al borrar un Veterinario,
         la Cita NO se borra, pero veterinario_id pasa a ser NULL.
-        (Principio: No queremos perder el historial médico si echamos a un médico).
         """
+        # Limpiamos la sesión por si acaso hay objetos sueltos de tests anteriores
+        session.expunge_all()
+
         # Setup
         c = Cliente(nombre="Luis", dni="444D")
         v = Veterinario(nombre="Dr. House", dni="555E")
         session.add_all([c, v])
         session.commit()
+        
+        # Refrescamos para asegurarnos de que tienen IDs y están limpios
+        session.refresh(c)
+        session.refresh(v)
 
         m = Mascota(nombre="Rex", especie="Perro", cliente_id=c.id)
         session.add(m)
         session.commit()
+        session.refresh(m)
 
         cita = Cita(fecha=date.today(), hora="12:00", mascota_id=m.id, veterinario_id=v.id)
         session.add(cita)
@@ -155,6 +162,9 @@ class TestRestricciones:
         # Al hacer commit debe explotar
         with pytest.raises(IntegrityError):
             session.commit()
+        
+        # Rollback necesario después de un error para limpiar la sesión
+        session.rollback()
 
     def test_veterinario_dni_unico(self, session):
         """Verificar unique constraint en veterinarios."""
@@ -167,6 +177,8 @@ class TestRestricciones:
 
         with pytest.raises(IntegrityError):
             session.commit()
+            
+        session.rollback()
 
     def test_campos_obligatorios_cliente(self, session):
         """Verificar que 'nombre' y 'dni' no pueden ser Null."""
@@ -176,6 +188,8 @@ class TestRestricciones:
         
         with pytest.raises(IntegrityError):
             session.commit()
+            
+        session.rollback()
 
     def test_campos_obligatorios_cita(self, session):
         """Cita sin fecha ni hora debe fallar."""
@@ -192,3 +206,5 @@ class TestRestricciones:
 
         with pytest.raises(IntegrityError):
             session.commit()
+            
+        session.rollback()

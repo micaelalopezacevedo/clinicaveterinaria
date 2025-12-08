@@ -1,9 +1,7 @@
 import pytest
 from src.database import session as db_session_obj
-from src.database import Cliente, Mascota, Veterinario
-
-# Si ya tienes el modelo Cita, descomenta la siguiente línea:
-# from src.database import Cita 
+# IMPORTANTE: Añadir Cita aquí
+from src.database import Cliente, Mascota, Veterinario, Cita
 
 # =======================================================
 # 1. GESTIÓN DE LA BASE DE DATOS (SETUP & TEARDOWN)
@@ -20,17 +18,16 @@ def session():
     yield db_session_obj
     
     limpiar_base_de_datos()
-    # Opcional: db_session_obj.close() si usas pool de conexiones
 
 def limpiar_base_de_datos():
     """
     Borra todos los datos de las tablas.
     IMPORTANTE: El orden es vital para evitar errores de Foreign Key.
-    Primero se borran los hijos (Mascotas, Citas), luego los padres (Clientes, Vets).
+    Primero se borran los hijos (Citas), luego intermedios (Mascotas), luego padres (Clientes, Vets).
     """
     try:
-        # 1. Si tienes citas, descomenta esto primero (son las que más dependencias tienen)
-        # db_session_obj.query(Cita).delete()
+        # 1. Borrar Citas PRIMERO (porque dependen de Mascota y Veterinario)
+        db_session_obj.query(Cita).delete()
         
         # 2. Borrar Mascotas (dependen de Cliente)
         db_session_obj.query(Mascota).delete()
@@ -59,6 +56,7 @@ def cliente_default(session):
     )
     session.add(cliente)
     session.commit()
+    session.refresh(cliente) # Vital para evitar DetachedInstanceError
     return cliente
 
 @pytest.fixture
@@ -78,6 +76,7 @@ def mascota_default(session, cliente_default):
     )
     session.add(mascota)
     session.commit()
+    session.refresh(mascota) # AÑADIDO: Vital para evitar DetachedInstanceError
     return mascota
 
 @pytest.fixture
@@ -93,4 +92,5 @@ def veterinario_default(session):
     )
     session.add(vet)
     session.commit()
+    session.refresh(vet) # AÑADIDO: Vital para evitar DetachedInstanceError
     return vet

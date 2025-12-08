@@ -1,13 +1,11 @@
 import pytest
 from src.mascotas import (
     registrar_mascota, listar_mascotas, obtener_mascota_por_id,
-    obtener_mascotas_por_cliente, obtener_mascotas_por_especie, # <-- Nueva importación
+    obtener_mascotas_por_cliente, obtener_mascotas_por_especie, 
     modificar_mascota, eliminar_mascota, contar_mascotas,
-    ver_historial_mascota # <-- Nueva importación
+    ver_historial_mascota
 )
 from src.exceptions import MascotaNoEncontradaException, ClienteNoEncontradoException, ValidacionException
-
-# Nota: pytest inyecta automáticamente 'session', 'cliente_default' y 'mascota_default' desde conftest.py
 
 # =======================================================
 # TESTS DE REGISTRO (CREATE)
@@ -53,7 +51,8 @@ def test_listar_mascotas(session, cliente_default):
 def test_obtener_mascota_por_id(session, mascota_default):
     mascota = obtener_mascota_por_id(mascota_default.id)
     assert mascota.id == mascota_default.id
-    assert mascota.nombre == "Luna"
+    # CORREGIDO: mascota_default se llama "Firulais" en conftest.py
+    assert mascota.nombre == "Firulais" 
 
 def test_obtener_mascota_por_id_inexistente(session):
     with pytest.raises(MascotaNoEncontradaException):
@@ -68,10 +67,10 @@ def test_obtener_mascotas_por_cliente(session, cliente_default):
     assert {m.nombre for m in mascotas} == {"Rex", "Simba"}
 
 def test_obtener_mascotas_por_especie(session, cliente_default):
-    """(NUEVO) Verifica el filtrado por especie."""
+    """Verifica el filtrado por especie."""
     registrar_mascota("Rex", "Perro", cliente_default.id)
     registrar_mascota("Simba", "Gato", cliente_default.id)
-    registrar_mascota("Firulais", "Perro", cliente_default.id)
+    registrar_mascota("Firulais Jr", "Perro", cliente_default.id)
 
     perros = obtener_mascotas_por_especie("Perro")
     gatos = obtener_mascotas_por_especie("Gato")
@@ -81,8 +80,7 @@ def test_obtener_mascotas_por_especie(session, cliente_default):
     assert perros[0].especie == "Perro"
 
 def test_ver_historial_mascota_vacio(session, mascota_default):
-    """(NUEVO) Verifica que devuelva una lista (vacía al inicio)."""
-    # Como aún no creamos Citas en este test, debe devolver lista vacía
+    """Verifica que devuelva una lista (vacía al inicio)."""
     historial = ver_historial_mascota(mascota_default.id)
     assert isinstance(historial, list)
     assert len(historial) == 0
@@ -97,7 +95,7 @@ def test_modificar_mascota_nombre(session, mascota_default):
     assert modificada.id == mascota_default.id
 
 def test_modificar_mascota_campos_opcionales(session, mascota_default):
-    """(NUEVO) Verifica que se pueden actualizar raza, peso, edad, sexo."""
+    """Verifica que se pueden actualizar raza, peso, edad, sexo."""
     modificada = modificar_mascota(
         mascota_default.id,
         raza="Mestizo",
@@ -110,8 +108,8 @@ def test_modificar_mascota_campos_opcionales(session, mascota_default):
     assert modificada.edad == 10
     assert modificada.peso == 15.5
     assert modificada.sexo == "Hembra"
-    # El nombre no debió cambiar
-    assert modificada.nombre == "Luna"
+    # CORREGIDO: El nombre original es "Firulais", no "Luna"
+    assert modificada.nombre == "Firulais"
 
 def test_modificar_mascota_inexistente(session):
     with pytest.raises(MascotaNoEncontradaException):

@@ -104,6 +104,12 @@ class _RepositorioCita:
         return session.query(Cita).filter_by(estado=estado).order_by(Cita.fecha.desc()).all()
     
     @staticmethod
+    def obtener_futuras():
+        """CRUD: READ - devuelve citas desde hoy en adelante ordenadas"""
+        hoy = date.today()
+        return session.query(Cita).filter(Cita.fecha >= hoy).order_by(Cita.fecha, Cita.hora).all()
+    
+    @staticmethod
     def actualizar(cita: Cita, **campos) -> Cita:
         """
         CRUD: UPDATE
@@ -279,6 +285,15 @@ def modificar_cita(cita_id: int, fecha: date = None, hora: time = None, motivo: 
 
 def cancelar_cita(cita_id: int):
     """Cancela una cita (cambia estado a Cancelada)"""
+    # 1. Recuperamos la cita para verificar su estado actual
+    cita = _RepositorioCita.obtener_por_id(cita_id)
+    
+    # 2. VALIDACIÓN: Si ya está realizada, prohibimos cancelarla
+    if cita.estado == "Realizada":
+        # Esto lanzará la excepción que el test está esperando
+        raise ValidacionException("Estado", "No se puede cancelar una cita que ya ha sido realizada")
+        
+    # 3. Si no está realizada, procedemos a cambiar el estado a Cancelada
     return modificar_cita(cita_id, estado="Cancelada")
 
 def eliminar_cita(cita_id: int):
@@ -293,3 +308,19 @@ def contar_citas():
 def contar_citas_por_estado(estado: str):
     """Cuenta citas por estado"""
     return _RepositorioCita.contar_por_estado(estado)
+
+def marcar_cita_realizada(cita_id: int):
+    """Atajo para cambiar estado a Realizada"""
+    return modificar_cita(cita_id, estado="Realizada")
+
+def cita_existe(cita_id: int) -> bool:
+    """Verifica si una cita existe sin lanzar excepción"""
+    try:
+        _RepositorioCita.obtener_por_id(cita_id)
+        return True
+    except CitaNoEncontradaException:
+        return False
+
+def obtener_proximas_citas():
+    """Devuelve las citas de hoy en adelante"""
+    return _RepositorioCita.obtener_futuras()

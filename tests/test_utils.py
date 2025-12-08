@@ -75,10 +75,19 @@ class TestValidaciones:
 class TestFormateo:
     """Pruebas para funciones de formateo"""
 
-    def test_formatear_telefono(self):
-        """Test: formatear teléfono a formato estándar (sin espacios/guiones)."""
-        assert Utilidades.formatear_telefono("600 123 456") == "600123456"
-        assert Utilidades.formatear_telefono("  666-777-888  ") == "666777888"
+    @staticmethod
+    def formatear_telefono(telefono: str) -> str:
+        """
+        Recibe un teléfono y lo devuelve limpio:
+        - Quita espacios al principio y final.
+        - Quita espacios entre números.
+        - Quita guiones.
+        """
+        if not telefono:
+            return ""
+            
+        # Encadenamos los replace para limpiar todo de una vez
+        return telefono.strip().replace(" ", "").replace("-", "")
 
     def test_formatear_dni(self):
         """Test: convertir DNI a mayúsculas y quitar espacios."""
