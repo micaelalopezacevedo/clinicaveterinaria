@@ -254,3 +254,4 @@ def obtener_veterinarios_por_especialidad(especialidad: str):
     except Exception as e:
         Logger.log_excepcion(e, "obtener_veterinarios_por_especialidad")
         return []
+#
