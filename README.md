@@ -109,8 +109,6 @@ PRACTICA_FINAL/
 </code></pre>
 
 ## DESARROLLO DEL PROYECTO
-### PRIMERA ENTREGA: ESQUELETO DE LA PRÁCTICA
-Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió en cuatro ocasiones:
 - Primera reunión - Crear la estructura de archivos (6/11/25): El equipo se reune, lee detenidamente el objetivo de la práctica, y se pone de acuerdo para realizar el esqueleto y subirlo a github.
 - Segunda  reunión - Investigar el front-end (7/11/25): Se investigó a fondo sobre Streamlit, su uso y se contemplaron distintas formas de utilizarlo en el proyecto.
 - Tercera reunión - Investigar el back-end (10/11/25): investigamos el uso de SQLite para entender cómo implementarlo en el proyecto. Además, creamos un entorno virtual para trabajar de forma ordenada y asegurar el correcto funcionamiento del proyecto.
@@ -122,3 +120,4 @@ Para realizar la tarea con entrega el día 11 de noviembre, el equipo se reunió
 - Novena reunión (3/12/25): Actualizar páginas pendientes para seguir los principios SOLID. Arreglar bugs y errores de Streamlit para un mejor funcionamiento de la app.
 - Décima reunión (04/12/2025): Mejora de app.py y revisión de exceptions.py y logger.py. También hemos añadido algún test que nos faltaba.
 - Undécima reunión (05/12/2025): Implementación del sistema de login en Streamlit con autenticación de usuarios usando la librería bcrypt y gestión de sesión mediante st.session_state. Incluido protección de todas las páginas para que solo sean accesibles tras iniciar sesión correctamente.
+- Duodécima (08/12/2025): Rediseño de las tarjetas de información para obtener una mejor estructura y una mayor legibilidad, actualización del módulo de citas, correción de errores técnicos con "keys".  También corrección de tests para ser 100% funcionales.
